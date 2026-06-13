@@ -30,7 +30,7 @@
 
 ## 本地运行
 
-要求：Node.js ≥ 20
+要求：Node.js ≥ 22（依赖 undici 8）
 
 ```bash
 npm install

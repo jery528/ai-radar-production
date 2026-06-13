@@ -27,41 +27,18 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    # 把 Secret 映射到 job 级环境变量，后续所有步骤都能用，且可在 if 条件中检测是否为空
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
     steps:
       - uses: actions/checkout@v4
 
-      # 诊断标记：仅当对应 Secret 缺失时才运行（通过此步是否被「跳过」即可判断 Secret 状态）
-      - name: marker-DATABASE_URL-missing
-        if: ${{ env.DATABASE_URL == '' }}
-        run: echo "DATABASE_URL secret is EMPTY"
-      - name: marker-GLM_API_KEY-missing
-        if: ${{ env.GLM_API_KEY == '' }}
-        run: echo "GLM_API_KEY secret is EMPTY"
-
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22 # undici 8 需要 Node >= 22.19
           cache: npm
 
       - run: npm ci
-
-      # 临时探针：逐一定位抓取秒崩原因（各自独立运行，互不阻断）
-      - name: probe-node-version
-        if: always()
-        run: node -v
-      - name: probe-url-parse
-        if: always()
-        run: node -e "const u=new URL(process.env.DATABASE_URL); console.log('URL ok host=',u.hostname)"
-      - name: probe-require-chain
-        if: always()
-        run: node -e "require('./src/services/crawler'); require('./src/services/dataSnapshot'); require('./src/services/profiles'); console.log('require ok')"
-      - name: probe-db-connect
-        if: always()
-        run: node -e "const {createPool,query}=require('./src/db'); createPool(); query('SELECT 1 AS x').then(()=>{console.log('db ok');process.exit(0)}).catch(e=>{console.error('db FAIL',e.code,e.message);process.exit(1)})"
 
       - name: 抓取最新情报（北京 05:00 那次会生成 AI 日报）
         run: node scripts/run-crawl.js
