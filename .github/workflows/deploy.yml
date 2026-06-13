@@ -37,6 +37,11 @@ jobs:
 
       - run: npm ci
 
+      - name: 检查 Secrets 是否就绪（只打印 true/false，不泄露值）
+        run: |
+          echo "DATABASE_URL 已配置: ${{ secrets.DATABASE_URL != '' }}"
+          echo "GLM_API_KEY 已配置: ${{ secrets.GLM_API_KEY != '' }}"
+
       - name: 抓取最新情报（北京 05:00 那次会生成 AI 日报）
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}

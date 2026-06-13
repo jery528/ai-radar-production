@@ -1,4 +1,4 @@
-// 手动跑一轮抓取（开发调试用）：node scripts/run-crawl.js [--no-llm]
+// 手动跑一轮抓取（开发调试用 / CI 抓取）：node scripts/run-crawl.js [--no-llm]
 require("dotenv").config();
 const { createPool, query } = require("../src/db");
 const { ensureSchema } = require("../src/schema");
@@ -6,7 +6,25 @@ const { seedIfNeeded } = require("../src/seed");
 const settings = require("../src/settings");
 const crawler = require("../src/services/crawler");
 
+// 启动前自检：明确报出 DATABASE_URL 是否就绪（CI 里 Secret 没配好时一眼可见）
+function preflight() {
+  const url = process.env.DATABASE_URL || "";
+  if (!url) {
+    console.error("[自检] ✗ DATABASE_URL 未设置。GitHub Actions 请到 仓库 Settings → Secrets and variables → Actions 添加名为 DATABASE_URL 的 Repository secret。");
+    process.exit(1);
+  }
+  try {
+    const u = new URL(url);
+    console.log(`[自检] ✓ DATABASE_URL 已就绪（协议 ${u.protocol.replace(":", "")}，主机 ${u.hostname}，库 ${decodeURIComponent(u.pathname.replace(/^\//, ""))}，长度 ${url.length}）`);
+  } catch (error) {
+    console.error(`[自检] ✗ DATABASE_URL 格式无法解析（${error.message}）。请检查值里是否多了引号、空格或换行。`);
+    process.exit(1);
+  }
+  console.log(`[自检] GLM_API_KEY ${process.env.GLM_API_KEY ? "已设置" : "未设置（将无法生成 AI 摘要/日报，但不影响抓取）"}`);
+}
+
 (async () => {
+  preflight();
   createPool();
   await ensureSchema();
   await seedIfNeeded();
