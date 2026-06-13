@@ -35,6 +35,14 @@ jobs:
           node-version: 20
           cache: npm
 
+      # 诊断标记：仅当对应 Secret 缺失时才运行；通过这些步骤是否被「跳过」即可判断 Secret 状态
+      - name: marker-DATABASE_URL-missing
+        if: ${{ secrets.DATABASE_URL == '' }}
+        run: echo "DATABASE_URL secret is empty"
+      - name: marker-GLM_API_KEY-missing
+        if: ${{ secrets.GLM_API_KEY == '' }}
+        run: echo "GLM_API_KEY secret is empty"
+
       - run: npm ci
 
       - name: 检查 Secrets 是否就绪（只打印 true/false，不泄露值）
