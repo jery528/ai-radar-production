@@ -49,6 +49,20 @@ jobs:
 
       - run: npm ci
 
+      # 临时探针：逐一定位抓取秒崩原因（各自独立运行，互不阻断）
+      - name: probe-node-version
+        if: always()
+        run: node -v
+      - name: probe-url-parse
+        if: always()
+        run: node -e "const u=new URL(process.env.DATABASE_URL); console.log('URL ok host=',u.hostname)"
+      - name: probe-require-chain
+        if: always()
+        run: node -e "require('./src/services/crawler'); require('./src/services/dataSnapshot'); require('./src/services/profiles'); console.log('require ok')"
+      - name: probe-db-connect
+        if: always()
+        run: node -e "const {createPool,query}=require('./src/db'); createPool(); query('SELECT 1 AS x').then(()=>{console.log('db ok');process.exit(0)}).catch(e=>{console.error('db FAIL',e.code,e.message);process.exit(1)})"
+
       - name: 抓取最新情报（北京 05:00 那次会生成 AI 日报）
         run: node scripts/run-crawl.js
 
