@@ -42,10 +42,9 @@ async function main() {
   app.use(compression());
   app.use(express.json({ limit: "1mb" }));
 
-  // 多页面：同一个壳，前端按路径渲染对应模块（注入站点标题与 SEO 描述）
+  // 同一个前端壳，前端按路径渲染（注入站点标题与 SEO 描述）
   const indexTemplate = () => fs.readFileSync(path.join(publicDir, "index.html"), "utf8");
-  const PAGE_PATHS = ["/", "/leaderboard", "/insights", "/report", "/sources", "/method"];
-  app.get(PAGE_PATHS, async (req, res, next) => {
+  async function serveAppShell(req, res, next) {
     try {
       const html = indexTemplate()
         .replace("{{SITE_TITLE}}", escapeHtml(await settings.get("site.title", "AI 情报雷达")))
@@ -54,7 +53,7 @@ async function main() {
     } catch (error) {
       next(error);
     }
-  });
+  }
   app.get("/admin", (req, res) => {
     res.sendFile(path.join(publicDir, "admin", "index.html"));
   });
@@ -62,6 +61,13 @@ async function main() {
   app.use(publicRoutes);
   app.use(adminRoutes);
   app.use(express.static(publicDir, { index: false, maxAge: "10m" }));
+
+  // SPA 兜底：除 /api 外的所有 GET 都返回前端壳
+  // （支持 / 、/leaderboard 等管理员页面，以及 /<用户名>、/<用户名>/<页> 用户页面）
+  app.get(/.*/, (req, res, next) => {
+    if (req.path.startsWith("/api/")) return next();
+    return serveAppShell(req, res, next);
+  });
 
   // 统一错误处理
   // eslint-disable-next-line no-unused-vars

@@ -1,9 +1,11 @@
 const express = require("express");
 const { query } = require("../db");
 const settings = require("../settings");
+const users = require("../users");
 const crawler = require("../services/crawler");
 const dataSnapshot = require("../services/dataSnapshot");
 const insights = require("../services/insights");
+const profiles = require("../services/profiles");
 const { parseJsonColumn } = require("../util");
 
 const router = express.Router();
@@ -14,9 +16,19 @@ router.get("/api/items", async (req, res, next) => {
     const page = Math.max(1, Number(req.query.page) || 1);
     const pageSize = Math.min(Math.max(1, Number(req.query.pageSize) || 20), 100);
 
+    // 按用户 profile 限制可见赛道（首页/管理员=全部可见赛道）
+    const { profile } = await profiles.resolveProfile(req.query.u);
+    const base = await dataSnapshot.getSnapshot();
+    const allowed = users.resolveAllowedSectors(profile, base.payload.sectors.map((s) => s.id));
+    const allowedSet = new Set(allowed);
+
     const where = ["sec.is_visible = 1"];
     const params = [];
-    if (req.query.sector && req.query.sector !== "all") {
+    if (allowed.length) {
+      where.push(`i.sector_id IN (${allowed.map(() => "?").join(",")})`);
+      params.push(...allowed);
+    }
+    if (req.query.sector && req.query.sector !== "all" && allowedSet.has(req.query.sector)) {
       where.push("i.sector_id = ?");
       params.push(String(req.query.sector));
     }
@@ -56,11 +68,18 @@ router.get("/api/items", async (req, res, next) => {
          LIMIT ? OFFSET ?`,
         [...params, pageSize, (page - 1) * pageSize]
       ),
-      // 赛道栏全局计数（不随筛选变化，与参考站行为一致）
-      query(
-        `SELECT i.sector_id, COUNT(*) AS n FROM items i JOIN sectors sec ON sec.id = i.sector_id
-         WHERE sec.is_visible = 1 GROUP BY i.sector_id`
-      ),
+      // 赛道栏计数（限本用户允许的赛道，不随搜索/类型/时间筛选变化）
+      allowed.length
+        ? query(
+            `SELECT i.sector_id, COUNT(*) AS n FROM items i JOIN sectors sec ON sec.id = i.sector_id
+             WHERE sec.is_visible = 1 AND i.sector_id IN (${allowed.map(() => "?").join(",")})
+             GROUP BY i.sector_id`,
+            allowed
+          )
+        : query(
+            `SELECT i.sector_id, COUNT(*) AS n FROM items i JOIN sectors sec ON sec.id = i.sector_id
+             WHERE sec.is_visible = 1 GROUP BY i.sector_id`
+          ),
     ]);
 
     const sectorNameById = new Map(sectors.map((s) => [s.id, s.name]));
@@ -99,11 +118,13 @@ router.get("/api/items", async (req, res, next) => {
   }
 });
 
-// 机会洞察统计（排行榜与洞察卡共用，服务端计算 + 30s 缓存）
+// 机会洞察统计（排行榜与洞察卡共用，服务端计算 + 30s 缓存；置顶按用户 profile）
 router.get("/api/insights", async (req, res, next) => {
   try {
+    const { profile } = await profiles.resolveProfile(req.query.u);
+    const base = await insights.computeInsightStats();
     res.set("cache-control", "no-cache");
-    res.json(await insights.computeInsightStats());
+    res.json(profiles.applyInsightsProfile(base, profile));
   } catch (error) {
     next(error);
   }
@@ -112,12 +133,19 @@ router.get("/api/insights", async (req, res, next) => {
 router.get("/api/data", async (req, res, next) => {
   try {
     const snapshot = await dataSnapshot.getSnapshot();
-    if (req.headers["if-none-match"] === snapshot.etag) {
+    const { user, profile, found, requested } = await profiles.resolveProfile(req.query.u);
+    const payload = profiles.applyDataProfile(snapshot.payload, profile, {
+      user,
+      userNotFound: Boolean(req.query.u) && !found,
+      requested,
+    });
+    const etag = `${snapshot.etag.slice(0, -1)}-u:${user ? user.username : (requested || "_")}"`;
+    if (req.headers["if-none-match"] === etag) {
       return res.status(304).end();
     }
-    res.set("etag", snapshot.etag);
+    res.set("etag", etag);
     res.set("cache-control", "no-cache");
-    res.json(snapshot.payload);
+    res.json(payload);
   } catch (error) {
     next(error);
   }

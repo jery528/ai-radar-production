@@ -5,7 +5,7 @@ const { query, transaction } = require("./db");
 const settings = require("./settings");
 const { hashPassword } = require("./auth");
 
-const SEED_VERSION = "3"; // v2: crawl.proxyUrl；v3: 多页面导航、short-video 赛道、话题置顶、日报定时
+const SEED_VERSION = "4"; // v2: crawl.proxyUrl；v3: 多页面导航/short-video/置顶/日报；v4: 多用户 users 表
 const seedDir = path.join(__dirname, "..", "seed");
 
 function readSeed(name) {
@@ -93,6 +93,27 @@ async function seedIfNeeded() {
       label: "Token 签名密钥",
       description: "自动生成",
     });
+  }
+
+  // ---------- v4：多用户。把管理员迁入 users 表（全局唯一 admin） ----------
+  if (!existingKeys.has("admin.username")) {
+    await settings.set("admin.username", process.env.ADMIN_USERNAME || "admin", {
+      type: "string",
+      category: "admin",
+      label: "管理员用户名",
+      description: "首页展示该管理员配置的页面；可在用户管理中修改",
+    });
+  }
+  {
+    const adminRows = await query("SELECT id FROM users WHERE role = 'admin' LIMIT 1");
+    if (!adminRows.length) {
+      const adminUsername = String(await settings.get("admin.username", "admin"));
+      const adminHash = (await settings.get("admin.passwordHash", "")) || hashPassword("admin123");
+      await query(
+        "INSERT INTO users (username, password_hash, role, profile, is_enabled) VALUES (?, ?, 'admin', ?, 1)",
+        [adminUsername, adminHash, JSON.stringify({})]
+      );
+    }
   }
 
   // ---------- v3 数据迁移（对已有库幂等更新；新库种子本身已是新形态） ----------

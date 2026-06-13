@@ -20,35 +20,48 @@ function verifyPassword(password, stored) {
   }
 }
 
-// 无状态 token："<expiresAtMs>.<hmac>"，HMAC 密钥 = tokenSecret + passwordHash，
-// 因此修改密码后所有旧 token 自动失效。
-async function tokenKey() {
-  const secret = await settings.get("admin.tokenSecret", "");
-  const passwordHash = await settings.get("admin.passwordHash", "");
-  return `${secret}|${passwordHash}`;
+// 无状态 token："<userId>.<expiresAtMs>.<hmac>"。
+// HMAC 密钥 = 全局 tokenSecret + 该用户口令哈希，因此：
+//   - 修改某用户密码 → 只失效该用户的旧 token
+//   - 轮换 tokenSecret → 失效全部 token
+async function globalSecret() {
+  return String(await settings.get("admin.tokenSecret", ""));
 }
 
-async function issueToken() {
+function signature(payload, key) {
+  return crypto.createHmac("sha256", key).update(payload).digest("hex");
+}
+
+async function issueToken(user) {
   const ttlHours = Number(await settings.get("admin.sessionTtlHours", 72)) || 72;
   const expiresAt = Date.now() + ttlHours * 3600 * 1000;
-  const hmac = crypto.createHmac("sha256", await tokenKey()).update(String(expiresAt)).digest("hex");
-  return { token: `${expiresAt}.${hmac}`, expiresAt };
+  const payload = `${user.id}.${expiresAt}`;
+  const key = `${await globalSecret()}|${user.passwordHash}`;
+  return { token: `${payload}.${signature(payload, key)}`, expiresAt };
 }
 
-async function verifyToken(token) {
-  const [expiresAtRaw, hmac] = String(token || "").split(".");
+/** 校验 token，返回对应用户对象（含 profile）或 null */
+async function resolveToken(token) {
+  const parts = String(token || "").split(".");
+  if (parts.length !== 3) return null;
+  const [userIdRaw, expiresAtRaw, hmac] = parts;
   const expiresAt = Number(expiresAtRaw);
-  if (!expiresAt || !hmac || expiresAt < Date.now()) return false;
-  const expected = crypto.createHmac("sha256", await tokenKey()).update(String(expiresAt)).digest("hex");
+  if (!expiresAt || expiresAt < Date.now()) return null;
+  const users = require("./users"); // 延迟 require 避免循环依赖
+  const user = await users.getById(Number(userIdRaw));
+  if (!user || !user.isEnabled) return null;
+  const key = `${await globalSecret()}|${user.passwordHash}`;
+  const expected = signature(`${userIdRaw}.${expiresAtRaw}`, key);
   try {
-    return crypto.timingSafeEqual(Buffer.from(hmac, "hex"), Buffer.from(expected, "hex"));
+    if (!crypto.timingSafeEqual(Buffer.from(hmac, "hex"), Buffer.from(expected, "hex"))) return null;
   } catch (_) {
-    return false;
+    return null;
   }
+  return user;
 }
 
 // 登录限速：同 IP 10 分钟内最多 5 次失败
-const loginFailures = new Map(); // ip -> [timestamps]
+const loginFailures = new Map();
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_FAILURES = 5;
 
@@ -69,19 +82,33 @@ function clearLoginFailures(ip) {
   loginFailures.delete(ip);
 }
 
-/** Express 中间件：校验 Authorization: Bearer <token> */
-async function requireAdmin(req, res, next) {
+function bearerToken(req) {
   const header = req.headers.authorization || "";
-  const token = header.startsWith("Bearer ") ? header.slice(7) : "";
-  if (await verifyToken(token)) return next();
-  res.status(401).json({ ok: false, error: "未登录或登录已过期" });
+  return header.startsWith("Bearer ") ? header.slice(7) : "";
+}
+
+/** 中间件：任何已登录用户，挂载 req.user */
+async function requireAuth(req, res, next) {
+  const user = await resolveToken(bearerToken(req));
+  if (!user) return res.status(401).json({ ok: false, error: "未登录或登录已过期" });
+  req.user = user;
+  next();
+}
+
+/** 中间件：要求管理员（须在 requireAuth 之后） */
+function requireAdmin(req, res, next) {
+  if (!req.user || req.user.role !== "admin") {
+    return res.status(403).json({ ok: false, error: "需要管理员权限" });
+  }
+  next();
 }
 
 module.exports = {
   hashPassword,
   verifyPassword,
   issueToken,
-  verifyToken,
+  resolveToken,
+  requireAuth,
   requireAdmin,
   isLoginBlocked,
   recordLoginFailure,

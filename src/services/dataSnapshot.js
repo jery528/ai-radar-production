@@ -27,11 +27,18 @@ async function buildPayload() {
 
   const visibleSectors = sectors.filter((s) => s.is_visible);
 
-  // 条目不再随 /api/data 全量下发（页面卡顿优化）：列表走 /api/items 分页接口
+  // 条目不再随 /api/data 全量下发（页面卡顿优化）：列表走 /api/items 分页接口。
+  // 分赛道计数供个人 profile 重算 itemCount（只显示自己选的赛道之和）。
   const countRows = await query(
-    `SELECT COUNT(*) AS n FROM items i JOIN sectors s ON s.id = i.sector_id WHERE s.is_visible = 1`
+    `SELECT i.sector_id, COUNT(*) AS n FROM items i JOIN sectors s ON s.id = i.sector_id
+     WHERE s.is_visible = 1 GROUP BY i.sector_id`
   );
-  const itemCount = countRows[0].n;
+  const sectorItemCounts = {};
+  let itemCount = 0;
+  for (const row of countRows) {
+    sectorItemCounts[row.sector_id] = row.n;
+    itemCount += row.n;
+  }
 
   const runStats = (lastRun && lastRun.stats) || {};
   const stats = {
@@ -110,6 +117,7 @@ async function buildPayload() {
       title: await settings.get("site.title", ""),
       metaDescription: await settings.get("site.metaDescription", ""),
     },
+    sectorItemCounts,
   };
 }
 

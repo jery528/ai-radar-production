@@ -76,13 +76,15 @@
     try {
       const result = await api("/api/admin/login", {
         method: "POST",
-        body: { password: $("[data-login-password]").value },
+        body: {
+          username: $("[data-login-username]").value.trim(),
+          password: $("[data-login-password]").value,
+        },
       });
       token = result.token;
       localStorage.setItem(TOKEN_KEY, token);
       $("[data-login-password]").value = "";
-      showShell();
-      switchTab("overview");
+      await start();
     } catch (error) {
       errorEl.textContent = error.message;
       errorEl.hidden = false;
@@ -93,7 +95,20 @@
 
   // ---------- Tab 路由 ----------
   const views = {};
-  let currentTab = "overview";
+  let currentTab = "profile";
+  let currentUser = null; // { username, role }
+
+  /** 按角色显示可用 tab，普通用户只看到「我的主页配置」 */
+  function setupTabsForRole(role) {
+    $$("[data-tab]").forEach((button) => {
+      const need = button.dataset.role;
+      button.hidden = need === "admin" && role !== "admin";
+    });
+    const viewLink = $("[data-view-site]");
+    if (viewLink && currentUser) {
+      viewLink.href = currentUser.role === "admin" ? "/" : `/${encodeURIComponent(currentUser.username)}`;
+    }
+  }
 
   function switchTab(tab) {
     currentTab = tab;
@@ -1330,15 +1345,286 @@
     });
   };
 
+  // ---------- Tab：我的主页配置（所有用户） ----------
+  views.profile = async (panel) => {
+    const data = await api("/api/admin/profile");
+    const profile = data.profile || {};
+    const allSectors = data.sectors || [];
+    const allTopics = data.topics || [];
+    const myUrl = data.role === "admin" ? "/" : `/${encodeURIComponent(data.username)}`;
+
+    panel.innerHTML = `
+      <h2>我的主页配置</h2>
+      <p class="panel-sub">这些设置决定 <a href="${escapeHtml(myUrl)}" target="_blank" style="color:var(--green);font-weight:800">${escapeHtml(data.role === "admin" ? "首页（站点主页）" : myUrl)}</a> 的展示；情报内容由系统统一抓取，这里只调整你自己的呈现方式。</p>
+      <div class="card">
+        <h3>页面文案</h3>
+        <div class="form-grid">
+          <label class="field"><span>页面标题（浏览器标签，留空用默认）</span><input type="text" data-p-title /></label>
+          <label class="field"><span>首屏大标题（留空用默认）</span><input type="text" data-p-hero-title /></label>
+          <label class="field"><span>首屏描述（留空用默认）</span><textarea data-p-hero-desc></textarea></label>
+        </div>
+      </div>
+      <div class="card">
+        <h3>显示哪些赛道 · 顺序（不勾选=显示全部）</h3>
+        <div data-p-sectors></div>
+      </div>
+      <div class="card">
+        <h3>置顶话题（排行榜与机会洞察中排最前；不选=用站点默认）</h3>
+        <div data-p-topics class="form-grid"></div>
+      </div>
+      <div class="card">
+        <h3>默认赛道</h3>
+        <label class="field" style="max-width:320px"><span>进入情报流时默认选中</span><select data-p-default></select></label>
+      </div>
+      <div class="toolbar-row"><button class="btn primary" data-p-save>保存我的配置</button></div>
+      <div class="card mt">
+        <h3>修改我的密码</h3>
+        <div class="form-grid cols-2">
+          <label class="field"><span>原密码</span><input type="password" data-p-oldpass /></label>
+          <label class="field"><span>新密码（至少 6 位）</span><input type="password" data-p-newpass /></label>
+        </div>
+        <div class="toolbar-row mt"><button class="btn" data-p-changepass>修改密码</button></div>
+      </div>
+    `;
+
+    $("[data-p-title]", panel).value = profile.siteTitle || "";
+    $("[data-p-hero-title]", panel).value = profile.heroTitle || "";
+    $("[data-p-hero-desc]", panel).value = profile.heroDescription || "";
+
+    // 赛道：已选（按 profile 顺序）在前并勾选，其余在后未勾选；可上下移
+    const selectedIds = (profile.sectorIds || []).filter((id) => allSectors.some((s) => s.id === id));
+    const rest = allSectors.filter((s) => !selectedIds.includes(s.id)).map((s) => s.id);
+    const sel = [
+      ...selectedIds.map((id) => ({ id, checked: true })),
+      ...rest.map((id) => ({ id, checked: false })),
+    ];
+    const sectorName = (id) => (allSectors.find((s) => s.id === id) || {}).name || id;
+    const sectorsEl = $("[data-p-sectors]", panel);
+
+    function renderSectors() {
+      sectorsEl.innerHTML = "";
+      sel.forEach((row, index) => {
+        const line = document.createElement("div");
+        line.className = "module-row";
+        line.style.padding = "8px 12px";
+        line.append(
+          switchControl(row.checked, (checked) => {
+            row.checked = checked;
+          })
+        );
+        const name = document.createElement("span");
+        name.className = "name";
+        name.style.minWidth = "auto";
+        name.textContent = sectorName(row.id);
+        const spacer = document.createElement("span");
+        spacer.className = "spacer";
+        line.append(name, spacer);
+        line.append(
+          arrowPair(
+            () => { [sel[index - 1], sel[index]] = [sel[index], sel[index - 1]]; renderSectors(); },
+            () => { [sel[index + 1], sel[index]] = [sel[index], sel[index + 1]]; renderSectors(); },
+            index <= 0,
+            index >= sel.length - 1
+          )
+        );
+        sectorsEl.append(line);
+      });
+    }
+    renderSectors();
+
+    // 话题置顶（多选）
+    const pinnedSet = new Set(profile.pinnedTopicIds || []);
+    const topicsEl = $("[data-p-topics]", panel);
+    const topicChecks = new Map();
+    for (const topic of allTopics) {
+      const wrap = document.createElement("label");
+      wrap.className = "field-inline";
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = pinnedSet.has(topic.id);
+      topicChecks.set(topic.id, cb);
+      const span = document.createElement("span");
+      span.textContent = topic.title;
+      wrap.append(cb, span);
+      topicsEl.append(wrap);
+    }
+
+    // 默认赛道
+    const defaultSel = $("[data-p-default]", panel);
+    defaultSel.innerHTML =
+      `<option value="all">全部</option>` +
+      allSectors.map((s) => `<option value="${escapeHtml(s.id)}">${escapeHtml(s.name)}</option>`).join("");
+    defaultSel.value = profile.defaultSector || "all";
+
+    $("[data-p-save]", panel).addEventListener("click", async () => {
+      const next = {
+        siteTitle: $("[data-p-title]", panel).value.trim(),
+        heroTitle: $("[data-p-hero-title]", panel).value.trim(),
+        heroDescription: $("[data-p-hero-desc]", panel).value.trim(),
+        sectorIds: sel.filter((r) => r.checked).map((r) => r.id),
+        pinnedTopicIds: allTopics.map((t) => t.id).filter((id) => topicChecks.get(id).checked),
+        defaultSector: defaultSel.value,
+      };
+      try {
+        await api("/api/admin/profile", { method: "PUT", body: { profile: next } });
+        toast("已保存，刷新你的页面即可看到");
+      } catch (error) {
+        toast(error.message, true);
+      }
+    });
+
+    $("[data-p-changepass]", panel).addEventListener("click", async () => {
+      try {
+        const result = await api("/api/admin/password", {
+          method: "POST",
+          body: { oldPassword: $("[data-p-oldpass]", panel).value, newPassword: $("[data-p-newpass]", panel).value },
+        });
+        token = result.token;
+        localStorage.setItem(TOKEN_KEY, token);
+        toast("密码已修改");
+        $("[data-p-oldpass]", panel).value = "";
+        $("[data-p-newpass]", panel).value = "";
+      } catch (error) {
+        toast(error.message, true);
+      }
+    });
+  };
+
+  // ---------- Tab：用户管理（仅管理员） ----------
+  views.users = async (panel) => {
+    const { users } = await api("/api/admin/users");
+    panel.innerHTML = `
+      <h2>用户管理</h2>
+      <p class="panel-sub">系统唯一管理员的配置即首页；普通用户登录后配置自己的页面，通过「主页网址/用户名」访问</p>
+      <div class="card">
+        <h3>新增普通用户</h3>
+        <div class="form-grid cols-2">
+          <label class="field"><span>用户名（2-32 位小写字母/数字/_/-）</span><input type="text" data-nu-name /></label>
+          <label class="field"><span>初始密码（至少 6 位）</span><input type="text" data-nu-pass /></label>
+        </div>
+        <div class="toolbar-row mt"><button class="btn primary" data-nu-create>创建用户</button></div>
+      </div>
+      <div data-user-list></div>
+    `;
+
+    $("[data-nu-create]", panel).addEventListener("click", async () => {
+      try {
+        const result = await api("/api/admin/users", {
+          method: "POST",
+          body: { username: $("[data-nu-name]", panel).value.trim(), password: $("[data-nu-pass]", panel).value },
+        });
+        if (!result.ok) throw new Error(result.error);
+        toast(`已创建用户 ${result.username}`);
+        switchTab("users");
+      } catch (error) {
+        toast(error.message, true);
+      }
+    });
+
+    const listEl = $("[data-user-list]", panel);
+    const table = document.createElement("table");
+    table.className = "list";
+    table.innerHTML = `<tr><th>用户名</th><th>角色</th><th>页面</th><th>启用</th><th></th></tr>`;
+    for (const user of users) {
+      const tr = document.createElement("tr");
+      const pageUrl = user.role === "admin" ? "/" : `/${encodeURIComponent(user.username)}`;
+      tr.innerHTML = `
+        <td><strong>${escapeHtml(user.username)}</strong></td>
+        <td><span class="pill ${user.role === "admin" ? "ok" : "dim"}">${user.role === "admin" ? "管理员" : "普通用户"}</span></td>
+        <td><a href="${escapeHtml(pageUrl)}" target="_blank" class="mono">${escapeHtml(pageUrl)}</a></td>
+      `;
+      const tdEnabled = document.createElement("td");
+      if (user.role === "admin") {
+        tdEnabled.innerHTML = `<span class="muted">—</span>`;
+      } else {
+        tdEnabled.append(
+          switchControl(user.isEnabled, async (checked) => {
+            try {
+              await api(`/api/admin/users/${user.id}`, { method: "PUT", body: { isEnabled: checked } });
+              toast(checked ? "已启用" : "已停用");
+            } catch (error) {
+              toast(error.message, true);
+            }
+          })
+        );
+      }
+      tr.append(tdEnabled);
+
+      const tdActions = document.createElement("td");
+      const actions = document.createElement("div");
+      actions.className = "row-actions";
+
+      const rename = document.createElement("button");
+      rename.className = "btn small";
+      rename.textContent = user.role === "admin" ? "改用户名" : "改名";
+      rename.addEventListener("click", async () => {
+        const name = prompt(`新用户名（当前 ${user.username}）`, user.username);
+        if (!name || name === user.username) return;
+        try {
+          const result = await api(`/api/admin/users/${user.id}`, { method: "PUT", body: { username: name } });
+          if (!result.ok) throw new Error(result.error);
+          toast("已修改用户名");
+          switchTab("users");
+        } catch (error) {
+          toast(error.message, true);
+        }
+      });
+
+      const resetPass = document.createElement("button");
+      resetPass.className = "btn small";
+      resetPass.textContent = "重置密码";
+      resetPass.addEventListener("click", async () => {
+        const pass = prompt(`给 ${user.username} 设置新密码（至少 6 位）`);
+        if (!pass) return;
+        try {
+          const result = await api(`/api/admin/users/${user.id}/password`, { method: "POST", body: { newPassword: pass } });
+          if (!result.ok) throw new Error(result.error);
+          toast("密码已重置");
+        } catch (error) {
+          toast(error.message, true);
+        }
+      });
+
+      actions.append(rename, resetPass);
+      if (user.role !== "admin") {
+        const del = document.createElement("button");
+        del.className = "btn small danger";
+        del.textContent = "删除";
+        del.addEventListener("click", async () => {
+          if (!confirm(`确认删除用户「${user.username}」？其个人配置会一并删除。`)) return;
+          try {
+            const result = await api(`/api/admin/users/${user.id}`, { method: "DELETE" });
+            if (!result.ok) throw new Error(result.error);
+            toast("已删除");
+            switchTab("users");
+          } catch (error) {
+            toast(error.message, true);
+          }
+        });
+        actions.append(del);
+      }
+      tdActions.append(actions);
+      tr.append(tdActions);
+      table.append(tr);
+    }
+    listEl.append(table);
+  };
+
   // ---------- 启动 ----------
+  async function start() {
+    try {
+      const me = await api("/api/admin/me");
+      currentUser = me.user;
+      setupTabsForRole(currentUser.role);
+      showShell();
+      switchTab(currentUser.role === "admin" ? "overview" : "profile");
+    } catch (_) {
+      /* api() 内部已在 401 时跳登录 */
+    }
+  }
+
   (async () => {
     if (!token) return showLogin();
-    try {
-      await api("/api/admin/overview");
-      showShell();
-      switchTab("overview");
-    } catch (_) {
-      /* api() 内部已跳登录 */
-    }
+    await start();
   })();
 })();

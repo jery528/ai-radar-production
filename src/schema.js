@@ -155,6 +155,19 @@ const TABLES = [
     errors            INT NOT NULL DEFAULT 0,
     PRIMARY KEY (usage_date)
   )${TABLE_SUFFIX}`,
+
+  `CREATE TABLE IF NOT EXISTS users (
+    id            INT NOT NULL AUTO_INCREMENT,
+    username      VARCHAR(64)  NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role          ENUM('admin','user') NOT NULL DEFAULT 'user',
+    profile       JSON NOT NULL,
+    is_enabled    TINYINT(1) NOT NULL DEFAULT 1,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_users_username (username)
+  )${TABLE_SUFFIX}`,
 ];
 
 /** 给已存在的表补列（轻量迁移） */

@@ -2,6 +2,7 @@ const express = require("express");
 const { query, transaction } = require("../db");
 const settings = require("../settings");
 const auth = require("../auth");
+const users = require("../users");
 const { proxyStatus } = require("../net");
 const crawler = require("../services/crawler");
 const dataSnapshot = require("../services/dataSnapshot");
@@ -22,7 +23,7 @@ function asyncHandler(fn) {
   return (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 }
 
-// ---------- 登录 / 密码 ----------
+// ---------- 登录（用户名 + 密码，所有角色统一入口） ----------
 router.post(
   `${base}/login`,
   asyncHandler(async (req, res) => {
@@ -30,38 +31,125 @@ router.post(
     if (auth.isLoginBlocked(ip)) {
       return res.status(429).json({ ok: false, error: "失败次数过多，请 10 分钟后再试" });
     }
+    const username = users.normalizeUsername(req.body && req.body.username);
     const password = String((req.body && req.body.password) || "");
-    const storedHash = await settings.get("admin.passwordHash", "");
-    if (!auth.verifyPassword(password, storedHash)) {
+    const user = await users.getByUsername(username);
+    if (!user || !user.isEnabled || !auth.verifyPassword(password, user.passwordHash)) {
       auth.recordLoginFailure(ip);
-      return res.status(401).json({ ok: false, error: "密码错误" });
+      return res.status(401).json({ ok: false, error: "用户名或密码错误" });
     }
     auth.clearLoginFailures(ip);
-    const { token, expiresAt } = await auth.issueToken();
-    res.json({ ok: true, token, expiresAt });
+    const { token, expiresAt } = await auth.issueToken(user);
+    res.json({ ok: true, token, expiresAt, username: user.username, role: user.role });
   })
 );
 
-router.use(base, auth.requireAdmin);
+// 以下均需登录
+router.use(base, auth.requireAuth);
 
+// 当前登录用户信息
+router.get(
+  `${base}/me`,
+  asyncHandler(async (req, res) => {
+    res.json({ user: { id: req.user.id, username: req.user.username, role: req.user.role, profile: req.user.profile } });
+  })
+);
+
+// 自助：修改自己的密码（仅失效自己的旧 token）
 router.post(
   `${base}/password`,
   asyncHandler(async (req, res) => {
     const { oldPassword, newPassword } = req.body || {};
-    const storedHash = await settings.get("admin.passwordHash", "");
-    if (!auth.verifyPassword(String(oldPassword || ""), storedHash)) {
+    if (!auth.verifyPassword(String(oldPassword || ""), req.user.passwordHash)) {
       return res.status(400).json({ ok: false, error: "原密码错误" });
     }
-    if (!newPassword || String(newPassword).length < 6) {
-      return res.status(400).json({ ok: false, error: "新密码至少 6 位" });
-    }
-    await settings.set("admin.passwordHash", auth.hashPassword(String(newPassword)), {
-      type: "secret",
-      category: "admin",
-    });
-    // HMAC 密钥含口令哈希，旧 token 自动全部失效；签发一个新 token 给当前会话
-    const { token, expiresAt } = await auth.issueToken();
+    const result = await users.updatePassword(req.user.id, String(newPassword || ""));
+    if (!result.ok) return res.status(400).json(result);
+    const fresh = await users.getById(req.user.id);
+    const { token, expiresAt } = await auth.issueToken(fresh);
     res.json({ ok: true, token, expiresAt });
+  })
+);
+
+// 自助：读取个人主页配置 + 可选项（赛道/话题列表）
+router.get(
+  `${base}/profile`,
+  asyncHandler(async (req, res) => {
+    const [sectors, topics] = await Promise.all([
+      query("SELECT id, name FROM sectors WHERE is_visible = 1 ORDER BY sort_order, id"),
+      query("SELECT id, title FROM insight_topics WHERE is_visible = 1 ORDER BY sort_order, id"),
+    ]);
+    res.json({ profile: req.user.profile, username: req.user.username, role: req.user.role, sectors, topics });
+  })
+);
+
+// 自助：保存个人主页配置
+router.put(
+  `${base}/profile`,
+  asyncHandler(async (req, res) => {
+    const result = await users.setProfile(req.user.id, req.body && req.body.profile);
+    res.json(result);
+  })
+);
+
+// ---------- 以下为管理员专属 ----------
+router.use(base, auth.requireAdmin);
+
+// 用户管理
+router.get(
+  `${base}/users`,
+  asyncHandler(async (req, res) => {
+    res.json({ users: await users.list() });
+  })
+);
+
+router.post(
+  `${base}/users`,
+  asyncHandler(async (req, res) => {
+    const body = req.body || {};
+    const result = await users.create({ username: body.username, password: body.password, role: "user" });
+    res.status(result.ok ? 200 : 400).json(result);
+  })
+);
+
+router.put(
+  `${base}/users/:id`,
+  asyncHandler(async (req, res) => {
+    const id = Number(req.params.id);
+    const target = await users.getById(id);
+    if (!target) return res.status(404).json({ ok: false, error: "用户不存在" });
+    const body = req.body || {};
+    if (body.username !== undefined) {
+      const result = await users.rename(id, body.username);
+      if (!result.ok) return res.status(400).json(result);
+      if (target.role === "admin") await settings.set("admin.username", result.username);
+    }
+    if (body.isEnabled !== undefined) {
+      if (target.role === "admin" && !body.isEnabled) {
+        return res.status(400).json({ ok: false, error: "不能停用管理员" });
+      }
+      await users.setEnabled(id, Boolean(body.isEnabled));
+    }
+    res.json({ ok: true });
+  })
+);
+
+router.post(
+  `${base}/users/:id/password`,
+  asyncHandler(async (req, res) => {
+    const id = Number(req.params.id);
+    const target = await users.getById(id);
+    if (!target) return res.status(404).json({ ok: false, error: "用户不存在" });
+    const result = await users.updatePassword(id, String((req.body && req.body.newPassword) || ""));
+    res.status(result.ok ? 200 : 400).json(result);
+  })
+);
+
+router.delete(
+  `${base}/users/:id`,
+  asyncHandler(async (req, res) => {
+    const result = await users.remove(Number(req.params.id));
+    res.status(result.ok ? 200 : 400).json(result);
   })
 );
 

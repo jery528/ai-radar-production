@@ -10,6 +10,7 @@
     data: null, // /api/data 瘦身负载
     insights: null, // /api/insights 负载（按需）
     staticBundle: null, // 静态模式打包数据
+    username: null, // 当前浏览的用户页（null = 首页/管理员）
     route: "/",
     feed: {
       sector: "all",
@@ -133,6 +134,12 @@
     return Boolean(mod && mod.isVisible);
   }
 
+  // 当前用户名（来自路径首段）拼到 API 查询里，让服务端按对应 profile 返回
+  function withUser(params) {
+    if (state.username) params.set("u", state.username);
+    return params;
+  }
+
   async function loadData() {
     if (IS_STATIC) {
       if (!state.staticBundle) {
@@ -143,7 +150,8 @@
       state.data = state.staticBundle.data;
       return;
     }
-    const response = await fetch("/api/data");
+    const qs = withUser(new URLSearchParams()).toString();
+    const response = await fetch(`/api/data${qs ? `?${qs}` : ""}`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     state.data = await response.json();
   }
@@ -154,7 +162,8 @@
       state.insights = state.staticBundle.insights;
       return state.insights;
     }
-    const response = await fetch("/api/insights");
+    const qs = withUser(new URLSearchParams()).toString();
+    const response = await fetch(`/api/insights${qs ? `?${qs}` : ""}`);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     state.insights = await response.json();
     return state.insights;
@@ -170,6 +179,7 @@
       if (q) params.set("q", q);
       params.set("page", page);
       params.set("pageSize", pageSize);
+      withUser(params);
       const response = await fetch(`/api/items?${params}`);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
@@ -196,17 +206,28 @@
 
   // ---------- 路由 ----------
   const PAGES = ["/", "/leaderboard", "/insights", "/report", "/sources", "/method"];
+  const PAGE_NAMES = new Set(["leaderboard", "insights", "report", "sources", "method"]);
 
-  function currentRoute() {
+  /** 解析当前位置 → {username, page}。username 为 null 表示首页（管理员页）。 */
+  function parseLocation() {
     if (IS_STATIC) {
+      // 静态镜像只有管理员首页，多用户需服务端
       const hash = (location.hash || "").replace(/^#/, "");
-      return PAGES.includes(hash) ? hash : "/";
+      return { username: null, page: PAGES.includes(hash) ? hash : "/" };
     }
-    return PAGES.includes(location.pathname) ? location.pathname : "/";
+    const segs = location.pathname.split("/").filter(Boolean);
+    if (!segs.length) return { username: null, page: "/" };
+    if (PAGE_NAMES.has(segs[0])) return { username: null, page: `/${segs[0]}` };
+    const username = decodeURIComponent(segs[0]);
+    const page = segs[1] && PAGE_NAMES.has(segs[1]) ? `/${segs[1]}` : "/";
+    return { username, page };
   }
 
-  function hrefFor(path) {
-    return IS_STATIC ? `#${path}` : path;
+  function hrefFor(page) {
+    if (IS_STATIC) return `#${page}`;
+    const userBase = state.username ? `/${encodeURIComponent(state.username)}` : "";
+    if (page === "/") return userBase || "/";
+    return `${userBase}${page}`;
   }
 
   // ---------- 顶栏 / 页脚 ----------
@@ -228,19 +249,28 @@
         return `<a href="${escapeAttribute(hrefFor(nav.path))}"${active}>${escapeHtml(nav.label)}</a>`;
       })
       .join("");
-    const refreshButton = IS_STATIC
-      ? ""
-      : `<button class="refresh-button" type="button" data-refresh>${escapeHtml(s.refreshLabel || "刷新")}</button>`;
+    // 顶栏右侧：刷新按钮（仅首页/管理员视图且服务端模式）+ 登录入口
+    const isAdminHome = !state.username;
+    const refreshButton =
+      IS_STATIC || !isAdminHome
+        ? ""
+        : `<button class="refresh-button" type="button" data-refresh>${escapeHtml(s.refreshLabel || "刷新")}</button>`;
+    const loginLink = IS_STATIC ? "" : `<a href="/admin">登录</a>`;
+    // 副标题：浏览某用户页面时显示其用户名
+    const subtitle = state.username
+      ? `@${escapeHtml(state.username)} 的情报页`
+      : escapeHtml(s.brandSubtitle || "");
     el.innerHTML = `
       <a class="brand" href="${escapeAttribute(hrefFor("/"))}" aria-label="${escapeAttribute(s.brandName || "")}">
         <span class="brand-mark">${escapeHtml(s.brandMark || "")}</span>
         <span>
           ${escapeHtml(s.brandName || "")}
-          <small>${escapeHtml(s.brandSubtitle || "")}</small>
+          <small>${subtitle}</small>
         </span>
       </a>
       <nav class="nav" aria-label="主导航">
         ${navLinks}
+        ${loginLink}
         ${refreshButton}
       </nav>
     `;
@@ -832,16 +862,28 @@
     "/method": "method",
   };
 
+  function applyLocation() {
+    const loc = parseLocation();
+    state.username = loc.username;
+    state.route = loc.page;
+  }
+
   async function renderRoute() {
-    state.route = currentRoute();
     const main = document.querySelector("[data-main]");
     renderTopbar();
     renderFooter();
 
+    // 访问 /<用户名> 但用户不存在/已停用
+    if (state.data && state.data.userNotFound) {
+      main.innerHTML = `<div class="empty-state" style="margin:40px 0"><h3>用户不存在</h3><p>没有找到用户「${escapeHtml(state.data.requestedUser || state.username || "")}」，可能尚未创建或已停用。</p><p><a href="/" style="color:var(--green);font-weight:800">返回首页</a></p></div>`;
+      document.title = "用户不存在";
+      return;
+    }
+
     // 模块被隐藏时该页面不可用，回首页内容
     const ownerModule = ROUTE_MODULE[state.route];
     if (state.route !== "/" && ownerModule && !moduleVisible(ownerModule)) {
-      main.innerHTML = `<div class="empty-state" style="margin:40px 0"><h3>该板块已隐藏</h3><p>可在管理后台「页面与文案」中重新开启。</p></div>`;
+      main.innerHTML = `<div class="empty-state" style="margin:40px 0"><h3>该板块已隐藏</h3><p>可在配置中重新开启。</p></div>`;
       return;
     }
 
@@ -949,10 +991,14 @@
   // ---------- 启动 ----------
   async function boot() {
     try {
+      applyLocation(); // 先确定 username，再带着它请求数据
       await loadData();
       await renderRoute();
       if (IS_STATIC) {
-        window.addEventListener("hashchange", () => renderRoute());
+        window.addEventListener("hashchange", async () => {
+          applyLocation();
+          await renderRoute();
+        });
       }
     } catch (error) {
       document.querySelector("[data-main]").innerHTML =

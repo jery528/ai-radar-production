@@ -11,9 +11,13 @@
     <!-- 登录 -->
     <div class="login-wrap" data-login hidden>
       <form class="login-card" data-login-form>
-        <div class="login-brand"><span class="brand-mark">破</span> 管理后台</div>
+        <div class="login-brand"><span class="brand-mark">破</span> 登录</div>
         <label>
-          <span>管理密码</span>
+          <span>用户名</span>
+          <input type="text" data-login-username autocomplete="username" placeholder="管理员默认 admin" />
+        </label>
+        <label>
+          <span>密码</span>
           <input type="password" data-login-password autocomplete="current-password" placeholder="默认 admin123" />
         </label>
         <button type="submit" class="btn primary">登录</button>
@@ -26,17 +30,19 @@
       <aside class="side">
         <div class="side-brand"><span class="brand-mark">破</span> 情报导航后台</div>
         <nav class="side-nav" data-tabs>
-          <button data-tab="overview" class="active">概览与抓取</button>
-          <button data-tab="modules">页面与文案</button>
-          <button data-tab="sectors">赛道管理</button>
-          <button data-tab="sources">来源库</button>
-          <button data-tab="topics">洞察话题</button>
-          <button data-tab="items">情报条目</button>
-          <button data-tab="reports">AI 日报</button>
-          <button data-tab="settings">系统设置</button>
+          <button data-tab="profile" data-role="any">我的主页配置</button>
+          <button data-tab="overview" data-role="admin">概览与抓取</button>
+          <button data-tab="modules" data-role="admin">页面与文案</button>
+          <button data-tab="sectors" data-role="admin">赛道管理</button>
+          <button data-tab="sources" data-role="admin">来源库</button>
+          <button data-tab="topics" data-role="admin">洞察话题</button>
+          <button data-tab="items" data-role="admin">情报条目</button>
+          <button data-tab="reports" data-role="admin">AI 日报</button>
+          <button data-tab="users" data-role="admin">用户管理</button>
+          <button data-tab="settings" data-role="admin">系统设置</button>
         </nav>
         <div class="side-foot">
-          <a href="/" target="_blank">查看前台 ↗</a>
+          <a href="/" target="_blank" data-view-site>查看我的页面 ↗</a>
           <button class="btn ghost small" data-logout>退出登录</button>
         </div>
       </aside>

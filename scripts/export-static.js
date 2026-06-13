@@ -10,6 +10,8 @@ const { createPool, query } = require("../src/db");
 const { ensureSchema } = require("../src/schema");
 const dataSnapshot = require("../src/services/dataSnapshot");
 const insights = require("../src/services/insights");
+const profiles = require("../src/services/profiles");
+const usersModule = require("../src/users");
 const { parseJsonColumn } = require("../src/util");
 
 const ITEMS_PER_SECTOR = 30; // 每赛道至少打包的条目数
@@ -39,26 +41,28 @@ function mapItem(row, sectorNameById) {
   createPool();
   await ensureSchema();
 
-  console.log("[导出] 组装数据……");
-  const snapshot = await dataSnapshot.getSnapshot();
-  const insightStats = await insights.computeInsightStats();
+  console.log("[导出] 组装数据（应用管理员主页配置）……");
+  const admin = await usersModule.getAdmin();
+  const adminProfile = admin ? admin.profile : usersModule.DEFAULT_PROFILE;
+  const baseSnapshot = await dataSnapshot.getSnapshot();
+  const snapshot = { payload: profiles.applyDataProfile(baseSnapshot.payload, adminProfile, { user: admin }) };
+  const insightStats = profiles.applyInsightsProfile(await insights.computeInsightStats(), adminProfile);
 
   const sectors = await query("SELECT id, name FROM sectors");
   const sectorNameById = new Map(sectors.map((s) => [s.id, s.name]));
-  const visibleSectors = await query("SELECT id FROM sectors WHERE is_visible = 1 ORDER BY sort_order");
+  // 静态镜像只含管理员页面允许的赛道
+  const allowedIds = snapshot.payload.allowedSectorIds || [];
+  const visibleSectors = (
+    await query("SELECT id FROM sectors WHERE is_visible = 1 ORDER BY sort_order")
+  ).filter((s) => !allowedIds.length || allowedIds.includes(s.id));
 
   const itemSql = `
     SELECT i.id, i.title, i.url, i.tags, i.summary, i.ai_summary, i.published_at, i.sector_id,
            s.name AS source_name, s.type AS source_type, s.region AS source_region, s.language AS source_language
     FROM items i JOIN sources s ON s.id = i.source_id`;
 
+  const allowedSet = new Set(visibleSectors.map((s) => s.id));
   const pool = new Map();
-  const recentRows = await query(
-    `${itemSql} JOIN sectors sec ON sec.id = i.sector_id WHERE sec.is_visible = 1
-     ORDER BY i.published_at DESC LIMIT ?`,
-    [RECENT_ITEMS]
-  );
-  for (const row of recentRows) pool.set(row.id, row);
   for (const sector of visibleSectors) {
     const rows = await query(`${itemSql} WHERE i.sector_id = ? ORDER BY i.published_at DESC LIMIT ?`, [
       sector.id,
@@ -66,7 +70,19 @@ function mapItem(row, sectorNameById) {
     ]);
     for (const row of rows) pool.set(row.id, row);
   }
+  // 额外补充全局最新（仅允许赛道内）
+  const recentRows = await query(
+    `${itemSql} JOIN sectors sec ON sec.id = i.sector_id WHERE sec.is_visible = 1
+     ORDER BY i.published_at DESC LIMIT ?`,
+    [RECENT_ITEMS * 2]
+  );
+  for (const row of recentRows) {
+    if (allowedSet.has(row.sector_id) && pool.size < RECENT_ITEMS + visibleSectors.length * ITEMS_PER_SECTOR) {
+      pool.set(row.id, row);
+    }
+  }
   const items = [...pool.values()]
+    .filter((row) => allowedSet.has(row.sector_id))
     .sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
     .map((row) => mapItem(row, sectorNameById));
 
@@ -76,6 +92,7 @@ function mapItem(row, sectorNameById) {
   );
   const sectorCounts = { all: 0 };
   for (const row of countRows) {
+    if (!allowedSet.has(row.sector_id)) continue;
     sectorCounts[row.sector_id] = row.n;
     sectorCounts.all += row.n;
   }
