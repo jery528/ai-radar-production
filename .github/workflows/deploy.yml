@@ -27,38 +27,32 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    # 把 Secret 映射到 job 级环境变量，后续所有步骤都能用，且可在 if 条件中检测是否为空
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
     steps:
       - uses: actions/checkout@v4
+
+      # 诊断标记：仅当对应 Secret 缺失时才运行（通过此步是否被「跳过」即可判断 Secret 状态）
+      - name: marker-DATABASE_URL-missing
+        if: ${{ env.DATABASE_URL == '' }}
+        run: echo "DATABASE_URL secret is EMPTY"
+      - name: marker-GLM_API_KEY-missing
+        if: ${{ env.GLM_API_KEY == '' }}
+        run: echo "GLM_API_KEY secret is EMPTY"
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
-      # 诊断标记：仅当对应 Secret 缺失时才运行；通过这些步骤是否被「跳过」即可判断 Secret 状态
-      - name: marker-DATABASE_URL-missing
-        if: ${{ secrets.DATABASE_URL == '' }}
-        run: echo "DATABASE_URL secret is empty"
-      - name: marker-GLM_API_KEY-missing
-        if: ${{ secrets.GLM_API_KEY == '' }}
-        run: echo "GLM_API_KEY secret is empty"
-
       - run: npm ci
 
-      - name: 检查 Secrets 是否就绪（只打印 true/false，不泄露值）
-        run: |
-          echo "DATABASE_URL 已配置: ${{ secrets.DATABASE_URL != '' }}"
-          echo "GLM_API_KEY 已配置: ${{ secrets.GLM_API_KEY != '' }}"
-
       - name: 抓取最新情报（北京 05:00 那次会生成 AI 日报）
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
         run: node scripts/run-crawl.js
 
       - name: 静态导出
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: node scripts/export-static.js
 
       - uses: actions/configure-pages@v4
