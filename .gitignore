@@ -1,0 +1,12 @@
+node_modules/
+.env
+*.log
+
+# 含数据库密码与 API Key，严禁提交
+需求.txt
+
+# 构建产物与本地调试文件
+dist/
+/shot_*.png
+/dom.html
+/api_data_test.json

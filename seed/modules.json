@@ -1,0 +1,291 @@
+[
+  {
+    "id": "topbar",
+    "name": "顶部导航栏",
+    "anchor": "top",
+    "nav_items": [],
+    "is_orderable": 0,
+    "sort_order": 0,
+    "is_visible": 1,
+    "settings": {
+      "brandMark": "破",
+      "brandName": "AI破局情报导航",
+      "brandSubtitle": "Global AI Radar",
+      "refreshLabel": "刷新情报",
+      "refreshingLabel": "刷新中..."
+    }
+  },
+  {
+    "id": "hero",
+    "name": "首屏横幅",
+    "anchor": "hero",
+    "nav_items": [],
+    "is_orderable": 1,
+    "sort_order": 10,
+    "is_visible": 1,
+    "settings": {
+      "eyebrow": "Public feeds · RSS/Atom · Sector routing",
+      "title": "全球 AI 信息雷达",
+      "description": "聚合可公开抓取的信息源，自动按细分赛道归类；从前沿模型到 AI写作变现、自媒体、带货、跨境电商，给 AI破局俱乐部做一张持续更新的情报导航图。",
+      "imageUrl": "/assets/hero-ai-club.png"
+    }
+  },
+  {
+    "id": "stats",
+    "name": "抓取概览统计条",
+    "anchor": "stats",
+    "nav_items": [],
+    "is_orderable": 1,
+    "sort_order": 20,
+    "is_visible": 1,
+    "settings": {
+      "itemsLabel": "情报条目",
+      "sourcesLabel": "公开来源",
+      "sectorsLabel": "细分赛道",
+      "updatedLabel": "最近更新",
+      "waitingText": "等待抓取"
+    }
+  },
+  {
+    "id": "refresh-status",
+    "name": "刷新状态提示行",
+    "anchor": "refresh-status",
+    "nav_items": [],
+    "is_orderable": 1,
+    "sort_order": 30,
+    "is_visible": 1,
+    "settings": {
+      "defaultTemplate": "当前规则：只保留最近 {lookbackDays} 天内的情报。",
+      "runningText": "正在抓取最近 {lookbackDays} 天内的全球 AI 情报，请稍等。",
+      "successTemplate": "刷新完成：{items} 条情报，{ok}/{total} 个来源正常{linkText}。",
+      "errorTemplate": "刷新失败：{error}"
+    }
+  },
+  {
+    "id": "insights",
+    "name": "机会洞察与排行榜",
+    "anchor": "insights",
+    "nav_items": [
+      {
+        "label": "排行榜",
+        "path": "/leaderboard"
+      },
+      {
+        "label": "机会洞察",
+        "path": "/insights"
+      }
+    ],
+    "is_orderable": 1,
+    "sort_order": 40,
+    "is_visible": 1,
+    "settings": {
+      "eyebrow": "Actionable insights",
+      "title": "普通人能做的 AI 机会洞察",
+      "targetSectorId": "ordinary-income",
+      "summaryTemplate": "基于最近 {lookbackDays} 天、{sourceCount} 个来源、{itemCount} 条情报生成；其中{sectorName} {sectorCount} 条，占 {percent}%。更新时间：{generatedAt}。",
+      "metric1Label": "普通人热门情报",
+      "metric2Label": "相关来源",
+      "metric3Label": "当前热度最高",
+      "metricEmptyText": "暂无",
+      "leaderboardEyebrow": "Income ranking",
+      "leaderboardTitle": "AI变现机会排行榜",
+      "leaderboardSummaryTemplate": "按最近 {lookbackDays} 天情报量、来源覆盖、7 天内新增信号和案例可用性计算。当前第一名：{topTitle}，机会分 {topScore}。",
+      "leaderboardSummaryEmptyTemplate": "按最近 {lookbackDays} 天情报量、来源覆盖、7 天内新增信号和案例可用性计算。",
+      "scoreWeights": {
+        "count": 42,
+        "sources": 28,
+        "recent": 20,
+        "example": 10
+      },
+      "itemCountTemplate": "{count} 条情报",
+      "shareTemplate": "{share}% 占比",
+      "sourceCountTemplate": "{count} 个来源",
+      "recentTemplate": "{count} 条 7 天内",
+      "recentEmptyText": "等待近 7 天新信号",
+      "scoreLabel": "机会分",
+      "firstStepLabel": "第一步",
+      "caseLabel": "案例",
+      "blockLabels": {
+        "opportunity": "机会",
+        "threshold": "门槛",
+        "cases": "案例",
+        "tools": "工具",
+        "firstAction": "第一步行动"
+      },
+      "opportunityTemplate": "{opportunity} 过去 {lookbackDays} 天抓到 {count} 条相关情报，占{sectorName}赛道 {percent}%，覆盖 {sourceCount} 个来源。{signal}",
+      "opportunityEmptyTemplate": "{opportunity} 过去 {lookbackDays} 天暂未抓到足够样本，刷新后会继续补充信号。",
+      "topicMetricTemplate": "{count} 条 · {percent}%",
+      "emptyCaseText": "当前样本不足，刷新后会继续补充。",
+      "defaultFirstAction": "先拿一个真实场景做 7 天测试。",
+      "showTopicCards": true
+    }
+  },
+  {
+    "id": "report",
+    "name": "AI 机会洞察日报",
+    "anchor": "report",
+    "nav_items": [
+      {
+        "label": "AI日报",
+        "path": "/report"
+      }
+    ],
+    "is_orderable": 1,
+    "sort_order": 50,
+    "is_visible": 1,
+    "settings": {
+      "eyebrow": "AI Daily",
+      "title": "AI 机会洞察日报",
+      "emptyText": "暂无日报，完成一次抓取后自动生成。",
+      "generatedAtTemplate": "生成于 {generatedAt} · {model}"
+    }
+  },
+  {
+    "id": "radar",
+    "name": "情报流（赛道+列表）",
+    "anchor": "radar",
+    "nav_items": [
+      {
+        "label": "情报流",
+        "path": "/"
+      }
+    ],
+    "is_orderable": 1,
+    "sort_order": 60,
+    "is_visible": 1,
+    "settings": {
+      "sectorsEyebrow": "Sectors",
+      "sectorsTitle": "赛道",
+      "allSectorsLabel": "全部赛道",
+      "searchLabel": "搜索",
+      "searchPlaceholder": "模型、Agent、OpenAI、arXiv...",
+      "typeLabel": "来源",
+      "typeOptions": [
+        {
+          "value": "all",
+          "label": "全部来源"
+        },
+        {
+          "value": "official",
+          "label": "官方发布"
+        },
+        {
+          "value": "research",
+          "label": "研究论文"
+        },
+        {
+          "value": "media",
+          "label": "媒体报道"
+        },
+        {
+          "value": "analysis",
+          "label": "深度分析"
+        }
+      ],
+      "ageLabel": "时间",
+      "ageOptions": [
+        {
+          "value": "all",
+          "label": "不限时间"
+        },
+        {
+          "value": "1",
+          "label": "24 小时内"
+        },
+        {
+          "value": "7",
+          "label": "7 天内"
+        },
+        {
+          "value": "30",
+          "label": "30 天内"
+        }
+      ],
+      "feedEyebrow": "Latest",
+      "allItemsTitle": "全部 AI 情报",
+      "fallbackTitle": "AI 情报",
+      "resultCountTemplate": "{count} 条结果",
+      "featuredCount": 2,
+      "pageSize": 20,
+      "loadMoreLabel": "加载更多",
+      "loadingLabel": "加载中...",
+      "maxTags": 4,
+      "emptyTitle": "没有匹配结果",
+      "emptyBody": "换一个关键词、赛道或时间范围。",
+      "openLinkLabel": "打开原文"
+    }
+  },
+  {
+    "id": "sources",
+    "name": "全球来源库",
+    "anchor": "sources",
+    "nav_items": [
+      {
+        "label": "来源库",
+        "path": "/sources"
+      }
+    ],
+    "is_orderable": 1,
+    "sort_order": 70,
+    "is_visible": 1,
+    "settings": {
+      "eyebrow": "Source graph",
+      "title": "全球来源库",
+      "description": "默认接入公开 RSS/Atom 源，也加入普通人热门 AI 机会的搜索型来源，后续可以扩展到站点地图、官方 API、企业白名单来源。",
+      "okBadgeTemplate": "{count} 条",
+      "failBadgeText": "失败",
+      "okText": "已接入公开 Feed",
+      "typeRegionTemplate": "{type} · {region}"
+    }
+  },
+  {
+    "id": "method",
+    "name": "抓取策略说明",
+    "anchor": "method",
+    "nav_items": [
+      {
+        "label": "抓取策略",
+        "path": "/method"
+      }
+    ],
+    "is_orderable": 1,
+    "sort_order": 80,
+    "is_visible": 1,
+    "settings": {
+      "eyebrow": "Crawler policy",
+      "title": "抓取策略",
+      "cards": [
+        {
+          "num": "01",
+          "title": "优先公开 Feed",
+          "body": "使用 RSS、Atom、官方博客和论文源，减少对目标网站的压力，也降低版权和反爬风险。"
+        },
+        {
+          "num": "02",
+          "title": "自动赛道归类",
+          "body": "抓取后根据关键词和来源类型分配到基础模型、Agent、开源、多模态、普通人热门、企业落地等赛道。"
+        },
+        {
+          "num": "03",
+          "title": "保留来源链接",
+          "body": "本站只呈现标题、摘要、时间、分类和跳转，不复制全文，适合做导航入口和情报看板。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "footer",
+    "name": "页脚",
+    "anchor": "footer",
+    "nav_items": [],
+    "is_orderable": 0,
+    "sort_order": 1000,
+    "is_visible": 1,
+    "settings": {
+      "brandText": "AI破局情报导航",
+      "waitingText": "等待数据",
+      "healthTemplate": "{ok}/{total} 来源正常 · {items} 条 · 最近 {days} 天{linkText}",
+      "linkResolutionTemplate": " · 原文链接 {resolved}/{google}"
+    }
+  }
+]

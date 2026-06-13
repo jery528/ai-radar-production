@@ -1,0 +1,60 @@
+# 定时抓取全球 AI 情报 → 静态导出 → 部署 GitHub Pages
+# 需要在仓库 Settings → Secrets and variables → Actions 配置两个 Secret：
+#   DATABASE_URL  —— MySQL 连接串
+#   GLM_API_KEY   —— 智谱 BigModel API Key
+name: Crawl and Deploy Pages
+
+on:
+  schedule:
+    - cron: "0 21 * * *" # 北京时间 05:00：抓取 + 生成当日 AI 日报
+    - cron: "0 1,7,13 * * *" # 北京时间 09:00 / 15:00 / 21:00：仅更新数据
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  crawl-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: 抓取最新情报（北京 05:00 那次会生成 AI 日报）
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
+        run: node scripts/run-crawl.js
+
+      - name: 静态导出
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: node scripts/export-static.js
+
+      - uses: actions/configure-pages@v4
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

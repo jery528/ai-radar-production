@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>管理后台 | AI破局情报导航</title>
+    <meta name="robots" content="noindex" />
+    <link rel="stylesheet" href="/admin/admin.css" />
+  </head>
+  <body>
+    <!-- 登录 -->
+    <div class="login-wrap" data-login hidden>
+      <form class="login-card" data-login-form>
+        <div class="login-brand"><span class="brand-mark">破</span> 管理后台</div>
+        <label>
+          <span>管理密码</span>
+          <input type="password" data-login-password autocomplete="current-password" placeholder="默认 admin123" />
+        </label>
+        <button type="submit" class="btn primary">登录</button>
+        <p class="login-error" data-login-error hidden></p>
+      </form>
+    </div>
+
+    <!-- 主界面 -->
+    <div class="admin-shell" data-shell hidden>
+      <aside class="side">
+        <div class="side-brand"><span class="brand-mark">破</span> 情报导航后台</div>
+        <nav class="side-nav" data-tabs>
+          <button data-tab="overview" class="active">概览与抓取</button>
+          <button data-tab="modules">页面与文案</button>
+          <button data-tab="sectors">赛道管理</button>
+          <button data-tab="sources">来源库</button>
+          <button data-tab="topics">洞察话题</button>
+          <button data-tab="items">情报条目</button>
+          <button data-tab="reports">AI 日报</button>
+          <button data-tab="settings">系统设置</button>
+        </nav>
+        <div class="side-foot">
+          <a href="/" target="_blank">查看前台 ↗</a>
+          <button class="btn ghost small" data-logout>退出登录</button>
+        </div>
+      </aside>
+      <main class="panel" data-panel></main>
+    </div>
+
+    <div class="toast" data-toast hidden></div>
+    <script src="/admin/admin.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1305 @@
+[
+  {
+    "id": "writing",
+    "title": "AI写作变现",
+    "thesis": "低门槛机会正在从“写一篇文章”转向“批量产出可验证内容资产”。",
+    "signal_text": "写作助手进入操作系统、AI代写种草笔记、AI小说与AI代笔争议同时升温，说明内容生产正在被平台和监管共同重塑。",
+    "keywords": [
+      "写作",
+      "文案",
+      "小说",
+      "网文",
+      "种草",
+      "代写",
+      "作文"
+    ],
+    "metric_label": "写作相关信号",
+    "best_for": "有表达能力、行业经验或愿意长期做内容资产的人",
+    "opportunity": "做垂直领域内容资产：种草笔记、公众号长文、行业专栏、小说短篇、企业文案包。",
+    "threshold_text": "低到中。需要稳定选题、人工审稿、事实核查和一个可持续输出的垂直领域。",
+    "tools": [
+      "ChatGPT",
+      "Claude",
+      "Notion",
+      "飞书文档",
+      "Canva"
+    ],
+    "first_action": "选一个垂直题材，今天先做 30 个标题、10 个选题、3 篇样稿。",
+    "actions": [
+      "选一个垂直题材：职场、育儿、财经、AI工具、跨境运营，不做泛内容。",
+      "用 AI 做选题库、标题库、提纲和首稿，人工负责观点、案例和事实核查。",
+      "连续发布 14 天，记录阅读、收藏、咨询、转化，用数据决定是否做小课或咨询产品。"
+    ],
+    "sort_order": 10,
+    "is_visible": 1
+  },
+  {
+    "id": "creator",
+    "title": "AI自媒体与个人IP",
+    "thesis": "普通人更适合做“AI增强型专业号”，而不是追热点搬运号。",
+    "signal_text": "创作者经济和 AI Influencer 相关报道增多，YouTube 等平台开始标注 AI 生成内容，可信身份会越来越重要。",
+    "keywords": [
+      "自媒体",
+      "小红书",
+      "公众号",
+      "个人ip",
+      "创作者",
+      "creator",
+      "influencer",
+      "内容创作"
+    ],
+    "metric_label": "创作者相关信号",
+    "best_for": "想做个人IP、咨询服务、社群或工具测评账号的人",
+    "opportunity": "做 AI 增强型专业账号：工具实测、行业案例拆解、模板交付、咨询线索获取。",
+    "threshold_text": "中。需要明确人设、持续表达、真实案例和平台反馈复盘，不能只搬运热点。",
+    "tools": [
+      "ChatGPT",
+      "Perplexity",
+      "小红书",
+      "公众号",
+      "飞书多维表格"
+    ],
+    "first_action": "把账号定位写成一句话，并连续发 7 条同一人群的工具实测内容。",
+    "actions": [
+      "把账号定位写成一句话：我帮谁，用 AI 解决什么具体问题。",
+      "每周固定 3 类内容：工具实测、案例拆解、模板交付，避免只转新闻。",
+      "用 Notion/飞书维护案例库，把评论区高频问题沉淀成下一篇内容和付费入口。"
+    ],
+    "sort_order": 20,
+    "is_visible": 1
+  },
+  {
+    "id": "video",
+    "title": "AI短视频与数字人",
+    "thesis": "视频赛道的机会不在“更炫”，而在低成本测试更多商品、脚本和人群。",
+    "signal_text": "AI带货视频、AI剪辑、AI数字人、平台标注 AI 内容等信号同时出现，短视频正在进入规模化测试阶段。",
+    "keywords": [
+      "短视频",
+      "剪辑",
+      "数字人",
+      "视频",
+      "youtube",
+      "tiktok",
+      "带货视频",
+      "ai剪辑"
+    ],
+    "metric_label": "视频相关信号",
+    "best_for": "愿意高频测试脚本、商品、封面和短视频素材的人",
+    "opportunity": "用 AI 降低短视频试错成本：脚本、分镜、封面、剪辑版本、数字人口播素材。",
+    "threshold_text": "中。需要商品或服务场景、基础剪辑能力、镜头/素材审美和每天测试的执行力。",
+    "tools": [
+      "剪映",
+      "CapCut",
+      "Canva",
+      "Runway",
+      "HeyGen"
+    ],
+    "first_action": "选一个商品或服务，今天拆 20 个痛点脚本，先剪 3 条短视频测试。",
+    "actions": [
+      "先选可展示的商品或服务，拆 20 个痛点脚本，不急着做复杂数字人。",
+      "用 AI 生成脚本、分镜、封面标题和剪辑版本，每天至少 A/B 测 3 条。",
+      "只盯 3 个指标：3秒留存、完播率、评论咨询；达标后再加预算或矩阵号。"
+    ],
+    "sort_order": 30,
+    "is_visible": 1
+  },
+  {
+    "id": "commerce",
+    "title": "AI带货与跨境电商",
+    "thesis": "跨境和电商里的 AI 价值更偏“运营杠杆”：选品、素材、本地化和客服自动化。",
+    "signal_text": "AI电商增长引擎、AI Commerce、AI购物助手、跨境物流融资等信息显示，电商工具链正在快速 AI 化。",
+    "keywords": [
+      "带货",
+      "直播",
+      "电商",
+      "跨境",
+      "shopify",
+      "amazon",
+      "ecommerce",
+      "commerce",
+      "卖家",
+      "独立站",
+      "物流"
+    ],
+    "metric_label": "电商相关信号",
+    "best_for": "有供应链、店铺运营、外贸或广告投放基础的人",
+    "opportunity": "把 AI 用在电商运营杠杆：选品、评论分析、详情页、本地化素材、客服和邮件自动化。",
+    "threshold_text": "中到高。需要真实商品、供应链/履约能力、广告预算意识和转化数据复盘能力。",
+    "tools": [
+      "ChatGPT",
+      "Shopify",
+      "Amazon Seller Central",
+      "Canva",
+      "Klaviyo"
+    ],
+    "first_action": "选一个细分品类，抓 20 个竞品评论，用 AI 提炼 5 个卖点和 3 套详情页结构。",
+    "actions": [
+      "从一个细分品类开始：宠物、家居、户外、母婴、美妆，不做大而全店铺。",
+      "用 AI 做竞品评论分析、卖点提炼、多语言详情页和广告素材变体。",
+      "每周复盘转化漏斗：点击率低改素材，转化低改详情页，复购低改客服和邮件。"
+    ],
+    "sort_order": 40,
+    "is_visible": 1
+  },
+  {
+    "id": "private",
+    "title": "AI私域获客",
+    "thesis": "中小商家的真实需求不是“懂 AI”，而是降低获客成本、提高线索转化。",
+    "signal_text": "GEO、AI获客、AI营销自动化等报道集中出现，说明搜索入口、内容入口和销售入口都在变化。",
+    "keywords": [
+      "私域",
+      "获客",
+      "营销",
+      "销售",
+      "转化",
+      "geo",
+      "客户",
+      "社群运营"
+    ],
+    "metric_label": "获客相关信号",
+    "best_for": "能服务本地商家、B2B客户或垂直行业老板的人",
+    "opportunity": "给中小商家做 AI 获客和转化系统：问答库、朋友圈素材、短视频脚本、销售跟进话术。",
+    "threshold_text": "中。需要懂一个行业的成交链路，能拿到真实商家数据，并愿意做交付型服务。",
+    "tools": [
+      "ChatGPT",
+      "企微",
+      "飞书多维表格",
+      "Make",
+      "腾讯文档"
+    ],
+    "first_action": "找一个本地商家，先做一套 20 条 FAQ、10 条朋友圈文案、5 条跟进话术。",
+    "actions": [
+      "选一个本地服务行业：教育、医美、家政、装修、B2B服务，做 AI 获客模板包。",
+      "用 AI 生成问答库、朋友圈素材、短视频脚本、销售跟进话术和 FAQ。",
+      "用一周服务一个真实商家，拿到线索成本、咨询量、成交率三项前后对比。"
+    ],
+    "sort_order": 50,
+    "is_visible": 1
+  },
+  {
+    "id": "course",
+    "title": "AI课程与知识付费",
+    "thesis": "课程机会还在，但用户会越来越不买“概念课”，更买“陪跑结果”。",
+    "signal_text": "AI训练营、AI技能培训、AI课程、AI赚钱课风险提醒同时出现，市场需求和信任门槛都在上升。",
+    "keywords": [
+      "课程",
+      "知识付费",
+      "训练营",
+      "陪跑",
+      "培训",
+      "赚钱课",
+      "社群"
+    ],
+    "metric_label": "课程相关信号",
+    "best_for": "已经有可验证案例、模板、SOP或行业方法论的人",
+    "opportunity": "做小而具体的 AI 陪跑产品：7 天训练营、模板包、案例库、行业 SOP、作业点评。",
+    "threshold_text": "中到高。需要先有结果案例和交付能力，重点卖陪跑结果，不卖空泛概念。",
+    "tools": [
+      "飞书文档",
+      "飞书群",
+      "腾讯会议",
+      "Notion",
+      "ChatGPT"
+    ],
+    "first_action": "不要先做大课，先设计一个 7 天小陪跑：一个目标、一个作业、一个结果展示。",
+    "actions": [
+      "不要先做大课，先做 7 天小陪跑：一个目标、一个作业、一个可展示结果。",
+      "把交付物产品化：提示词库、SOP、案例库、复盘表，而不是只讲理论。",
+      "公开展示学员前后对比，避免夸张收益承诺，尤其规避“稳赚/月入”式表达。"
+    ],
+    "sort_order": 60,
+    "is_visible": 1
+  },
+  {
+    "id": "prompt",
+    "title": "AI提示词与模板包",
+    "thesis": "提示词不适合卖“神奇咒语”，更适合卖能直接交付结果的行业模板。",
+    "signal_text": "Prompt marketplace、AI模板包、工作流模板相关信号增加，说明低客单数字产品仍有需求，但必须绑定真实场景。",
+    "keywords": [
+      "提示词",
+      "prompt",
+      "模板",
+      "模板包",
+      "marketplace",
+      "指令"
+    ],
+    "metric_label": "模板相关信号",
+    "best_for": "会拆流程、会写 SOP、能把经验沉淀成模板的人",
+    "opportunity": "做行业提示词包和工作流模板：简历修改、销售话术、直播脚本、论文阅读、跨境邮件、客服 FAQ。",
+    "threshold_text": "低到中。难点不是写提示词，而是验证模板能稳定产出结果，并给用户清晰使用说明。",
+    "tools": [
+      "ChatGPT",
+      "Claude",
+      "Notion",
+      "飞书文档",
+      "Gumroad"
+    ],
+    "first_action": "选一个行业场景，今天做 20 条提示词、5 个示例输入、5 个示例输出。",
+    "actions": [
+      "先选一个强场景，不做泛用提示词合集。",
+      "每个模板都配示例、适用人群和失败时怎么改。",
+      "用 10 个真实用户测试后，再做低价模板包或陪跑服务。"
+    ],
+    "sort_order": 70,
+    "is_visible": 1
+  },
+  {
+    "id": "automation",
+    "title": "AI自动化接单",
+    "thesis": "自动化接单的机会在“帮小团队省人力”，不是炫技搭复杂流程。",
+    "signal_text": "AI workflow、Zapier、Make、automation agency 等信息增多，说明中小团队正在把重复工作外包给自动化方案。",
+    "keywords": [
+      "自动化",
+      "工作流",
+      "接单",
+      "workflow",
+      "zapier",
+      "make",
+      "automation agency"
+    ],
+    "metric_label": "自动化相关信号",
+    "best_for": "懂一点业务流程、表格、CRM或运营后台的人",
+    "opportunity": "给小团队做 AI 工作流：线索入库、日报生成、客服初筛、邮件跟进、表格清洗、内容排期。",
+    "threshold_text": "中。需要理解客户流程、会连接工具，并能处理异常数据和权限边界。",
+    "tools": [
+      "Make",
+      "Zapier",
+      "飞书多维表格",
+      "Airtable",
+      "ChatGPT"
+    ],
+    "first_action": "找一个重复流程，画出输入、处理、输出三步，先做一个 24 小时内可交付的小自动化。",
+    "actions": [
+      "从一个重复流程开始，不承诺全公司自动化。",
+      "先做半自动版本，确认客户真的愿意用。",
+      "按节省时间或减少错误来报价，而不是按工具数量报价。"
+    ],
+    "sort_order": 80,
+    "is_visible": 1
+  },
+  {
+    "id": "design",
+    "title": "AI设计与图片服务",
+    "thesis": "AI图片服务的价值不是生成一张图，而是低成本交付一组可商用素材。",
+    "signal_text": "AI头像、AI写真、AI logo、AI image generation business 等信号说明视觉类服务仍有普通人接单空间。",
+    "keywords": [
+      "头像",
+      "写真",
+      "logo",
+      "设计",
+      "图片",
+      "image",
+      "design",
+      "canva"
+    ],
+    "metric_label": "视觉服务信号",
+    "best_for": "有审美、会改图、懂品牌基础或电商素材的人",
+    "opportunity": "做小型视觉交付：头像写真、品牌 logo 初稿、电商主图、海报、课程封面、社媒配图。",
+    "threshold_text": "中。需要审美、版权意识、二次修图能力和稳定交付流程。",
+    "tools": [
+      "Midjourney",
+      "Canva",
+      "Photoshop",
+      "即梦",
+      "Runway"
+    ],
+    "first_action": "选一个交付品类，做 9 张样图和 3 档套餐，先找 3 个真实客户试单。",
+    "actions": [
+      "只做一个具体品类，先别接所有设计单。",
+      "建立风格参考、提示词、修图和交付检查表。",
+      "用样图展示效果，避免只讲 AI 生成能力。"
+    ],
+    "sort_order": 90,
+    "is_visible": 1
+  },
+  {
+    "id": "tool-review",
+    "title": "AI工具测评与导航",
+    "thesis": "工具测评的变现点在筛选和场景化，不在堆更多工具链接。",
+    "signal_text": "AI tools directory、AI tool review、工具导航等信息持续出现，说明用户仍需要可信的工具筛选入口。",
+    "keywords": [
+      "工具导航",
+      "工具测评",
+      "tools directory",
+      "tool review",
+      "测评",
+      "导航",
+      "ai工具"
+    ],
+    "metric_label": "工具测评信号",
+    "best_for": "愿意长期试工具、写对比、做清单和维护数据库的人",
+    "opportunity": "做垂直 AI 工具库：跨境卖家工具、短视频工具、设计工具、写作工具、销售获客工具。",
+    "threshold_text": "低到中。需要持续更新、真实测试和场景化评分，不能只复制官网介绍。",
+    "tools": [
+      "Notion",
+      "飞书多维表格",
+      "Tally",
+      "ChatGPT",
+      "Plausible"
+    ],
+    "first_action": "选一个人群，测 20 个工具，按价格、上手难度、结果质量做一张对比表。",
+    "actions": [
+      "从一个垂直人群做工具库，不做全网大全。",
+      "每个工具都写真实使用场景和替代品。",
+      "用咨询、会员、广告或联盟链接逐步变现。"
+    ],
+    "sort_order": 100,
+    "is_visible": 1
+  },
+  {
+    "id": "nocode",
+    "title": "AI无代码微SaaS",
+    "thesis": "无代码微SaaS适合从“一个表单+一个自动结果”开始，不适合一上来做大平台。",
+    "signal_text": "AI app builder、vibe coding、no-code app、micro SaaS 等信号显示，个人做小工具的门槛正在下降。",
+    "keywords": [
+      "无代码",
+      "微saas",
+      "no-code",
+      "app builder",
+      "vibe coding",
+      "saas",
+      "小工具"
+    ],
+    "metric_label": "微SaaS信号",
+    "best_for": "懂一个细分业务痛点，愿意持续维护小工具的人",
+    "opportunity": "做轻量工具：AI合同摘要、短视频脚本生成器、跨境邮件生成器、简历优化器、客服话术生成器。",
+    "threshold_text": "中到高。需要产品判断、基础工具搭建、用户反馈和长期维护。",
+    "tools": [
+      "Cursor",
+      "Lovable",
+      "Bubble",
+      "Supabase",
+      "OpenAI API"
+    ],
+    "first_action": "找一个可用表单描述的问题，先做一个输入表单和一个 AI 输出结果，不做复杂后台。",
+    "actions": [
+      "先做人工可替代的小流程，再让 AI 加速。",
+      "第一版只服务 10 个种子用户。",
+      "用真实使用频率判断要不要继续开发。"
+    ],
+    "sort_order": 110,
+    "is_visible": 1
+  },
+  {
+    "id": "career",
+    "title": "AI简历求职服务",
+    "thesis": "求职类服务适合做结果导向：简历、面试、作品集，而不是泛泛教 AI。",
+    "signal_text": "AI resume、AI career coach、AI 面试和求职工具信息增加，说明个人求职场景有稳定付费需求。",
+    "keywords": [
+      "简历",
+      "求职",
+      "面试",
+      "resume",
+      "career",
+      "coach",
+      "作品集"
+    ],
+    "metric_label": "求职服务信号",
+    "best_for": "懂招聘、HR、职场表达或某个岗位方向的人",
+    "opportunity": "做 AI 求职服务：简历改写、岗位匹配、面试题库、作品集包装、LinkedIn/脉脉资料优化。",
+    "threshold_text": "中。需要懂岗位逻辑、避免虚假包装，并能给出具体修改前后对比。",
+    "tools": [
+      "ChatGPT",
+      "Claude",
+      "Canva",
+      "Notion",
+      "LinkedIn"
+    ],
+    "first_action": "选一个岗位方向，拿 5 份简历做前后对比样例，形成一套修改清单。",
+    "actions": [
+      "先服务一个岗位方向，比如运营、产品、销售或跨境电商。",
+      "把交付拆成简历、面试、作品集三块。",
+      "用修改前后对比获取信任。"
+    ],
+    "sort_order": 120,
+    "is_visible": 1
+  },
+  {
+    "id": "localization",
+    "title": "AI翻译与本地化",
+    "thesis": "翻译接单会被 AI 压价，但本地化、字幕和跨境内容仍需要人工把关。",
+    "signal_text": "AI localization、AI 字幕翻译、跨境内容本地化相关信号说明，多语言内容增长带来服务需求。",
+    "keywords": [
+      "翻译",
+      "本地化",
+      "字幕",
+      "localization",
+      "translation",
+      "多语言"
+    ],
+    "metric_label": "本地化信号",
+    "best_for": "有语言能力、跨境经验、字幕或内容编辑经验的人",
+    "opportunity": "做跨境内容本地化：商品详情页、邮件、短视频字幕、课程字幕、独立站文案、多语言客服话术。",
+    "threshold_text": "中。需要语言能力、行业语感、校对能力和文化适配判断。",
+    "tools": [
+      "DeepL",
+      "ChatGPT",
+      "剪映",
+      "CapCut",
+      "Notion"
+    ],
+    "first_action": "选一个内容类型，做 3 个中英/中日/中西本地化样例，标出 AI 初稿和人工修改差异。",
+    "actions": [
+      "不要只卖翻译，卖本地化后的转化效果。",
+      "积累行业术语表和禁用词表。",
+      "先做短视频字幕或商品详情页这类小交付。"
+    ],
+    "sort_order": 130,
+    "is_visible": 1
+  },
+  {
+    "id": "digital-products",
+    "title": "AI数字产品售卖",
+    "thesis": "数字产品的核心是复用交付，一次制作，多次销售。",
+    "signal_text": "AI digital products、Etsy、print on demand、电子书和模板售卖等信号说明轻资产产品仍有长尾机会。",
+    "keywords": [
+      "数字产品",
+      "电子书",
+      "模板售卖",
+      "digital products",
+      "etsy",
+      "print on demand",
+      "模板"
+    ],
+    "metric_label": "数字产品信号",
+    "best_for": "能做内容、设计、模板或小工具，并愿意持续上新的人",
+    "opportunity": "做可重复销售的数字产品：电子书、Notion模板、简历模板、海报模板、儿童绘本素材、POD 图案。",
+    "threshold_text": "低到中。需要选品、版权意识、设计质量和平台运营。",
+    "tools": [
+      "Canva",
+      "ChatGPT",
+      "Etsy",
+      "Gumroad",
+      "Notion"
+    ],
+    "first_action": "选一个细分人群，做 5 个模板产品和 10 张展示图，先上架一个渠道测试。",
+    "actions": [
+      "先做一个模板系列，不做零散单品。",
+      "用 AI 做草稿，人工统一风格和质量。",
+      "记录浏览、收藏、购买，决定是否扩系列。"
+    ],
+    "sort_order": 140,
+    "is_visible": 1
+  },
+  {
+    "id": "office",
+    "title": "AI办公PPT交付",
+    "thesis": "办公交付最适合普通人切入，因为客户要的是省时间、少返工、能直接汇报。",
+    "signal_text": "AI presentation、AI办公自动化、PPT生成工具和企业提效类信息增加，说明办公室场景正在被重新拆成可外包的小交付。",
+    "keywords": [
+      "ppt",
+      "办公",
+      "presentation",
+      "powerpoint",
+      "汇报",
+      "文档"
+    ],
+    "metric_label": "办公交付信号",
+    "best_for": "会做汇报、排版、总结材料或企业文档的人",
+    "opportunity": "做 AI 办公交付：PPT美化、会议纪要转汇报、方案初稿、周报月报、培训课件、投标文档初稿。",
+    "threshold_text": "低到中。需要审美、结构化表达、行业常识和交付前人工校对。",
+    "tools": [
+      "ChatGPT",
+      "Gamma",
+      "Canva",
+      "飞书文档",
+      "PowerPoint"
+    ],
+    "first_action": "拿一个真实主题，今天做 3 页样稿：封面、问题分析、行动计划。",
+    "actions": [
+      "先做一个交付模板，比如汇报PPT或培训课件。",
+      "用 AI 出结构和初稿，人工负责逻辑、图表和措辞。",
+      "用前后对比图展示服务价值。"
+    ],
+    "sort_order": 150,
+    "is_visible": 1
+  },
+  {
+    "id": "spreadsheet",
+    "title": "AI数据报表与Excel自动化",
+    "thesis": "很多小团队不是缺大数据，而是缺一个能把表格清洗、汇总、解释清楚的人。",
+    "signal_text": "AI spreadsheet automation、Excel自动化、报表生成和运营分析类信号持续出现，说明表格工作正在变成可产品化服务。",
+    "keywords": [
+      "excel",
+      "表格",
+      "报表",
+      "数据分析",
+      "spreadsheet",
+      "dashboard"
+    ],
+    "metric_label": "数据报表信号",
+    "best_for": "会表格、运营、财务基础或业务分析的人",
+    "opportunity": "做数据报表接单：销售日报、库存周报、投放复盘、客户表清洗、经营看板、自动摘要。",
+    "threshold_text": "中。需要懂字段、口径、异常值和业务解释，不能只让 AI 写公式。",
+    "tools": [
+      "Excel",
+      "飞书多维表格",
+      "Google Sheets",
+      "ChatGPT",
+      "Looker Studio"
+    ],
+    "first_action": "找一张真实表，做清洗、汇总、结论三步，输出一页可读报表。",
+    "actions": [
+      "先选一个固定报表场景，比如销售、库存或投放。",
+      "建立字段字典和口径说明。",
+      "把交付做成每周更新服务，而不是一次性公式代写。"
+    ],
+    "sort_order": 160,
+    "is_visible": 1
+  },
+  {
+    "id": "product-photo",
+    "title": "AI商品图与广告素材",
+    "thesis": "商品图服务的机会在批量变体测试：同一商品快速试背景、卖点和场景。",
+    "signal_text": "AI product photos、AI ad creatives、电商主图和营销素材工具增长，说明商家正在把素材生产外包给更快的流程。",
+    "keywords": [
+      "商品图",
+      "主图",
+      "海报",
+      "ad creatives",
+      "product photos",
+      "广告素材"
+    ],
+    "metric_label": "商品素材信号",
+    "best_for": "懂电商、会修图、有基本视觉判断的人",
+    "opportunity": "做电商素材包：商品主图、详情页图、社媒广告图、活动海报、同款多场景图。",
+    "threshold_text": "中。需要版权意识、品牌统一性、修图能力和转化指标复盘。",
+    "tools": [
+      "Canva",
+      "Photoshop",
+      "Midjourney",
+      "即梦",
+      "ChatGPT"
+    ],
+    "first_action": "选一个商品，做 6 张不同场景主图，标注每张对应的卖点。",
+    "actions": [
+      "只服务一个品类，先做样板库。",
+      "每套素材绑定一个卖点，不只追求好看。",
+      "用点击率和询盘反馈决定下轮风格。"
+    ],
+    "sort_order": 170,
+    "is_visible": 1
+  },
+  {
+    "id": "education",
+    "title": "AI教育家教与陪练",
+    "thesis": "教育类机会不只是卖课，还包括题库、陪练、作业反馈和学习计划。",
+    "signal_text": "AI tutoring、AI教育工具、个性化学习和训练营信息增加，说明学习场景正在从内容课转向陪练型服务。",
+    "keywords": [
+      "教育",
+      "家教",
+      "陪练",
+      "tutoring",
+      "学习",
+      "培训"
+    ],
+    "metric_label": "教育陪练信号",
+    "best_for": "有教学经验、考试经验或擅长拆解学习任务的人",
+    "opportunity": "做 AI 学习陪练：错题讲解、口语陪练、简历面试训练、少儿阅读、职场技能练习。",
+    "threshold_text": "中到高。需要教学责任感、内容准确性和边界意识，不能让 AI 直接替代专业判断。",
+    "tools": [
+      "ChatGPT",
+      "Claude",
+      "Quizlet",
+      "飞书文档",
+      "腾讯会议"
+    ],
+    "first_action": "选一个学习目标，设计 7 天陪练计划和每天一个可检查作业。",
+    "actions": [
+      "先做小范围陪练，不做泛教育平台。",
+      "把每次反馈结构化：问题、原因、示范、下一步。",
+      "用完成率和进步样例证明价值。"
+    ],
+    "sort_order": 180,
+    "is_visible": 1
+  },
+  {
+    "id": "sales-chatbot",
+    "title": "AI客服与销售机器人",
+    "thesis": "客服机器人适合从 FAQ 和线索初筛开始，先解决重复咨询，再谈复杂成交。",
+    "signal_text": "AI customer support、AI chatbot、销售自动化和外呼工具持续出现，说明商家愿意为线索处理和客服降本付费。",
+    "keywords": [
+      "客服",
+      "外呼",
+      "chatbot",
+      "customer support",
+      "销售机器人",
+      "call center"
+    ],
+    "metric_label": "客服销售信号",
+    "best_for": "懂销售话术、客服流程或本地商家运营的人",
+    "opportunity": "给商家搭 FAQ 机器人、售前问答、线索分级、跟进话术和客服知识库。",
+    "threshold_text": "中。需要真实 FAQ、转人工机制、隐私边界和持续维护。",
+    "tools": [
+      "ChatGPT",
+      "Dify",
+      "飞书多维表格",
+      "企微",
+      "Make"
+    ],
+    "first_action": "找一个商家，整理 30 条常见问题和 10 条销售跟进话术。",
+    "actions": [
+      "先做问答库，不急着全自动成交。",
+      "设置无法回答时的转人工规则。",
+      "用咨询响应时间和线索转化率评估效果。"
+    ],
+    "sort_order": 190,
+    "is_visible": 1
+  },
+  {
+    "id": "newsletter",
+    "title": "AI行业情报Newsletter",
+    "thesis": "情报产品的价值在筛选、解释和行动建议，而不是复制新闻标题。",
+    "signal_text": "AI newsletter、趋势报告、工具榜单和行业情报相关来源增多，说明垂直人群需要可订阅的信息过滤器。",
+    "keywords": [
+      "newsletter",
+      "情报",
+      "资讯",
+      "趋势",
+      "trend report",
+      "榜单"
+    ],
+    "metric_label": "情报产品信号",
+    "best_for": "愿意长期追踪一个行业，并能把信息翻译成行动的人",
+    "opportunity": "做垂直 AI 情报：跨境卖家周报、AI工具周报、教育AI周报、短视频工具雷达、投融资摘要。",
+    "threshold_text": "低到中。需要持续阅读、判断力、引用来源和稳定更新节奏。",
+    "tools": [
+      "Substack",
+      "飞书文档",
+      "Notion",
+      "Perplexity",
+      "ChatGPT"
+    ],
+    "first_action": "选一个人群，做一期 5 条新闻 + 3 条行动建议的样刊。",
+    "actions": [
+      "固定一个读者人群，不做泛AI日报。",
+      "每条信息都写清影响和可执行动作。",
+      "用免费样刊获取订阅，再尝试会员或社群。"
+    ],
+    "sort_order": 200,
+    "is_visible": 1
+  },
+  {
+    "id": "audio",
+    "title": "AI播客配音与音频内容",
+    "thesis": "音频内容的机会在低成本把文字资产转成可听、可传播的内容。",
+    "signal_text": "AI voiceover、AI podcast production、语音生成和配音工具的信息增加，说明音频交付门槛正在下降。",
+    "keywords": [
+      "播客",
+      "配音",
+      "voiceover",
+      "podcast",
+      "audio",
+      "语音"
+    ],
+    "metric_label": "音频内容信号",
+    "best_for": "会写脚本、懂声音节奏或有内容策划能力的人",
+    "opportunity": "做音频交付：课程配音、短视频旁白、播客脚本、企业音频摘要、公众号文章转播客。",
+    "threshold_text": "中。需要脚本、版权、声音质量和后期剪辑，不能只生成干声。",
+    "tools": [
+      "ElevenLabs",
+      "剪映",
+      "CapCut",
+      "Audacity",
+      "ChatGPT"
+    ],
+    "first_action": "拿一篇文章，改成 3 分钟播客脚本并做一个完整音频样例。",
+    "actions": [
+      "先服务已有文字内容的人。",
+      "建立脚本、配音、剪辑、发布四步流程。",
+      "用试听样例成交，不只展示工具名。"
+    ],
+    "sort_order": 210,
+    "is_visible": 1
+  },
+  {
+    "id": "comic",
+    "title": "AI漫画绘本与故事内容",
+    "thesis": "故事类项目适合从短篇、系列角色和固定风格开始，逐步积累 IP 资产。",
+    "signal_text": "AI comic、AI picture book、儿童绘本和故事生成工具相关信息增加，说明图文故事生产正在变得更轻量。",
+    "keywords": [
+      "漫画",
+      "绘本",
+      "comic",
+      "picture book",
+      "故事",
+      "儿童"
+    ],
+    "metric_label": "图文故事信号",
+    "best_for": "有故事感、审美和长期连载耐心的人",
+    "opportunity": "做短篇漫画、儿童绘本、睡前故事、知识科普图文、品牌故事分镜。",
+    "threshold_text": "中。需要风格一致性、版权意识、分镜能力和人工审校。",
+    "tools": [
+      "Midjourney",
+      "Canva",
+      "ChatGPT",
+      "即梦",
+      "Photoshop"
+    ],
+    "first_action": "设计一个角色和 6 格短故事，先做一套风格一致的样章。",
+    "actions": [
+      "先做短系列，不急着做长篇书。",
+      "固定角色、色彩和画面比例。",
+      "用读者反馈决定是否扩展成模板、绘本或课程。"
+    ],
+    "sort_order": 220,
+    "is_visible": 1
+  },
+  {
+    "id": "agent-workflow",
+    "title": "AI Agent工作流服务",
+    "thesis": "Agent服务适合从一个可控任务开始，例如资料收集、表格整理、邮件初稿。",
+    "signal_text": "AI agent workflow、智能体搭建和自动化服务信号增加，说明企业和个人都在寻找可落地的小型智能体。",
+    "keywords": [
+      "agent",
+      "智能体",
+      "工作流",
+      "automation business",
+      "搭建"
+    ],
+    "metric_label": "Agent服务信号",
+    "best_for": "懂业务流程、会配置工具、能处理异常情况的人",
+    "opportunity": "做小型 Agent 交付：竞品监控、资料搜集、客服初筛、日报生成、销售跟进提醒。",
+    "threshold_text": "中到高。需要清晰边界、权限管理、人工审核和失败处理。",
+    "tools": [
+      "Dify",
+      "OpenAI API",
+      "Make",
+      "飞书多维表格",
+      "Cursor"
+    ],
+    "first_action": "选一个重复任务，写清输入、输出、审核点，先搭半自动版本。",
+    "actions": [
+      "用半自动流程验证需求。",
+      "把失败情况和转人工规则写进SOP。",
+      "按节省时间和稳定性报价。"
+    ],
+    "sort_order": 230,
+    "is_visible": 1
+  },
+  {
+    "id": "seo-geo",
+    "title": "AI SEO与GEO优化",
+    "thesis": "搜索流量正在从传统SEO扩展到AI问答引用，普通人可以从垂直行业内容优化切入。",
+    "signal_text": "AI SEO、Generative Engine Optimization、AI搜索优化相关信息增多，说明品牌开始关心自己能否被AI答案引用。",
+    "keywords": [
+      "seo",
+      "geo",
+      "搜索优化",
+      "generative engine optimization",
+      "search optimization"
+    ],
+    "metric_label": "搜索优化信号",
+    "best_for": "懂内容、行业关键词、网站运营或本地商家获客的人",
+    "opportunity": "给本地商家、SaaS、小品牌做AI搜索可见度优化：FAQ、案例页、结构化内容、竞品问题库。",
+    "threshold_text": "中。需要懂基础SEO、内容可信度、引用来源和效果跟踪。",
+    "tools": [
+      "Perplexity",
+      "ChatGPT",
+      "Google Search Console",
+      "Ahrefs",
+      "飞书表格"
+    ],
+    "first_action": "选一个行业，列出 30 个客户会问AI的问题，写出 5 篇可被引用的FAQ内容。",
+    "actions": [
+      "先从本地行业或垂直SaaS做，不做泛AI SEO。",
+      "对比品牌在ChatGPT、Perplexity、Google里的出现情况。",
+      "用问题库、FAQ和案例页做第一套交付。"
+    ],
+    "sort_order": 240,
+    "is_visible": 1
+  },
+  {
+    "id": "ugc-ads",
+    "title": "AI UGC广告素材",
+    "thesis": "品牌需要大量低成本广告变体，AI适合把脚本、口播、场景和商品卖点快速组合。",
+    "signal_text": "AI UGC ads、AI ad creatives和产品演示视频相关信号增加，说明素材测试成本正在下降。",
+    "keywords": [
+      "ugc",
+      "ad creatives",
+      "广告素材",
+      "video ads",
+      "product demo"
+    ],
+    "metric_label": "UGC广告信号",
+    "best_for": "懂短视频脚本、电商卖点或广告投放基础的人",
+    "opportunity": "做AI UGC素材包：口播脚本、虚拟人口播、产品演示、广告图、短视频变体。",
+    "threshold_text": "中。需要懂平台广告规范、转化指标、素材版权和品牌语气。",
+    "tools": [
+      "HeyGen",
+      "CapCut",
+      "Canva",
+      "Runway",
+      "ChatGPT"
+    ],
+    "first_action": "选一个商品，做 5 条不同痛点的15秒口播脚本和3套画面版本。",
+    "actions": [
+      "从一个商品或服务开始做素材包。",
+      "每条素材绑定一个人群痛点和一个行动按钮。",
+      "用点击率、咨询率、转化率筛选下一轮素材。"
+    ],
+    "sort_order": 250,
+    "is_visible": 1
+  },
+  {
+    "id": "leadgen",
+    "title": "AI线索挖掘与外呼预约",
+    "thesis": "B2B小团队最愿意为线索和预约付费，AI可以降低资料搜集和初筛成本。",
+    "signal_text": "AI lead generation、AI prospecting和appointment setting相关信息增加，说明销售前端正在被自动化重做。",
+    "keywords": [
+      "lead generation",
+      "线索",
+      "prospecting",
+      "appointment",
+      "outbound",
+      "sales automation"
+    ],
+    "metric_label": "线索增长信号",
+    "best_for": "懂销售、B2B行业、CRM或名单清洗的人",
+    "opportunity": "做线索挖掘服务：目标客户列表、公司画像、联系人补全、邮件初稿、预约跟进提醒。",
+    "threshold_text": "中到高。需要合规意识、数据来源边界、销售话术和客户行业理解。",
+    "tools": [
+      "Apollo",
+      "Clay",
+      "ChatGPT",
+      "HubSpot",
+      "飞书多维表格"
+    ],
+    "first_action": "选一个B2B行业，整理 50 个潜在客户和 3 套冷启动邮件模板。",
+    "actions": [
+      "先做名单和初筛，不承诺直接成交。",
+      "把客户画像、痛点、触达话术放在同一张表。",
+      "用预约数量和回复率证明价值。"
+    ],
+    "sort_order": 260,
+    "is_visible": 1
+  },
+  {
+    "id": "browser-extension",
+    "title": "AI浏览器插件与小工具",
+    "thesis": "浏览器插件适合解决单点重复动作，是个人开发者最容易验证需求的小产品。",
+    "signal_text": "AI Chrome extension、browser extension和微工具相关信号增多，说明小而专的工具仍有发布机会。",
+    "keywords": [
+      "chrome extension",
+      "browser extension",
+      "插件",
+      "extension",
+      "micro tool",
+      "wrapper"
+    ],
+    "metric_label": "插件小工具信号",
+    "best_for": "会基础开发、自动化或能找到高频浏览器场景的人",
+    "opportunity": "做浏览器小工具：网页总结、评论生成、表格提取、竞品监控、LinkedIn消息助手。",
+    "threshold_text": "中。需要能开发、维护权限、处理隐私和持续更新。",
+    "tools": [
+      "Cursor",
+      "OpenAI API",
+      "Chrome Extensions",
+      "Supabase",
+      "GitHub"
+    ],
+    "first_action": "找一个每天重复10次的浏览器动作，做一个只解决这件事的插件原型。",
+    "actions": [
+      "先解决一个动作，不做万能助手。",
+      "在Reddit、Product Hunt或小社群找10个测试用户。",
+      "根据使用频次决定是否收费。"
+    ],
+    "sort_order": 270,
+    "is_visible": 1
+  },
+  {
+    "id": "monitoring",
+    "title": "AI竞品监控与数据采集",
+    "thesis": "很多团队需要有人持续盯竞品、价格、评论和趋势，AI可以把采集和摘要产品化。",
+    "signal_text": "AI competitor monitoring、web scraping、research automation相关信息增加，说明情报外包需求在上升。",
+    "keywords": [
+      "competitor",
+      "竞品",
+      "monitoring",
+      "web scraping",
+      "data extraction",
+      "market research"
+    ],
+    "metric_label": "竞品监控信号",
+    "best_for": "懂一个行业、会表格、会基础自动化或爬虫的人",
+    "opportunity": "做竞品监控服务：价格变化、评论摘要、新品追踪、投放素材、行业周报。",
+    "threshold_text": "中。需要遵守网站规则、控制抓取频率、做来源标注和人工校验。",
+    "tools": [
+      "Apify",
+      "Browse AI",
+      "飞书表格",
+      "ChatGPT",
+      "Perplexity"
+    ],
+    "first_action": "选3个竞品，做一份价格、评论、新品和营销动作的周报样例。",
+    "actions": [
+      "先用公开页面和RSS源，不碰需要登录的数据。",
+      "把监控结果做成固定周报。",
+      "按监控对象数量和更新频率收费。"
+    ],
+    "sort_order": 280,
+    "is_visible": 1
+  },
+  {
+    "id": "knowledge-base",
+    "title": "AI知识库与RAG搭建",
+    "thesis": "中小团队不一定要复杂Agent，先把文档变成可问答的知识库就能产生价值。",
+    "signal_text": "AI knowledge base、RAG chatbot、document chatbot相关信息持续出现，说明文档问答是可落地服务。",
+    "keywords": [
+      "knowledge base",
+      "知识库",
+      "rag",
+      "document chatbot",
+      "文档问答"
+    ],
+    "metric_label": "知识库信号",
+    "best_for": "懂文档整理、客服FAQ、企业流程或基础工具配置的人",
+    "opportunity": "给团队搭知识库问答：客服FAQ、产品手册、销售话术、培训资料、内部制度。",
+    "threshold_text": "中。需要文档清洗、权限边界、答案校验和转人工机制。",
+    "tools": [
+      "Dify",
+      "Notion",
+      "飞书文档",
+      "OpenAI API",
+      "Supabase"
+    ],
+    "first_action": "拿一套FAQ或产品手册，整理成分类文档并做一个可问答Demo。",
+    "actions": [
+      "先服务资料明确的小团队。",
+      "把文档清洗和权限边界列入交付。",
+      "用客服响应时间和答案准确率评估。"
+    ],
+    "sort_order": 290,
+    "is_visible": 1
+  },
+  {
+    "id": "ima-skills-mcp",
+    "title": "IMA+Skills+MCP私域智能体",
+    "thesis": "真正的机会不是再做一个知识库，而是把私域资料、可复用技能和外部工具连接成能交付结果的工作台。",
+    "signal_text": "IMA 类私域知识库、Skills 技能封装和 MCP 工具协议同时成熟，意味着个人和小团队可以把知识资产、流程资产、触达渠道打成闭环。",
+    "keywords": [
+      "ima.copilot",
+      "腾讯ima",
+      "ima知识库",
+      "mcp",
+      "私域知识库",
+      "个人知识库",
+      "openclaw",
+      "知识技能分享平台"
+    ],
+    "metric_label": "私域智能体信号",
+    "best_for": "有私域客户、行业资料、社群内容或可复用服务SOP的人",
+    "opportunity": "做私域智能体交付：资料沉淀到 IMA/知识库，SOP 封装成 Skills，用 MCP 连接表格、CRM、企微、内容发布和数据工具。",
+    "threshold_text": "中到高。难点在资料治理、权限边界、SOP标准化和人工审核，不是简单接几个工具。",
+    "tools": [
+      "IMA",
+      "OpenClaw",
+      "MCP",
+      "Dify",
+      "企微",
+      "飞书多维表格"
+    ],
+    "first_action": "选一个私域场景，整理 50 条高频问答、10 个成交话术和 3 个可复用动作，先做一个半自动Demo。",
+    "actions": [
+      "先选一个私域场景：课程社群、咨询成交、本地商家、跨境卖家或工具测评社群。",
+      "把资料分三层：知识库资料、客户标签、可执行SOP。",
+      "先做半自动工作流，能回答、能生成、能提醒、能沉淀，再谈全自动。"
+    ],
+    "sort_order": 300,
+    "is_visible": 1
+  },
+  {
+    "id": "meeting-notes",
+    "title": "AI会议纪要与转写交付",
+    "thesis": "会议纪要是低门槛服务，但真正值钱的是把会议变成待办、决策和复盘。",
+    "signal_text": "AI meeting notes、transcript service、minutes automation相关信息增加，说明团队协作内容正在自动沉淀。",
+    "keywords": [
+      "meeting notes",
+      "会议纪要",
+      "transcript",
+      "minutes",
+      "meeting summary"
+    ],
+    "metric_label": "会议转写信号",
+    "best_for": "会整理信息、懂项目管理或能服务咨询/培训/会议密集团队的人",
+    "opportunity": "做会议转写整理：逐字稿、纪要、待办、决策表、客户访谈摘要、培训回放摘要。",
+    "threshold_text": "低到中。需要保密意识、信息结构化能力和人工校对。",
+    "tools": [
+      "飞书妙记",
+      "Otter",
+      "Whisper",
+      "ChatGPT",
+      "Notion"
+    ],
+    "first_action": "找一段30分钟会议录音，输出纪要、待办和风险清单三份交付物。",
+    "actions": [
+      "服务会议多但复盘弱的小团队。",
+      "把交付固定成纪要、待办、决策、风险。",
+      "用节省整理时间来报价。"
+    ],
+    "sort_order": 310,
+    "is_visible": 1
+  },
+  {
+    "id": "hr",
+    "title": "AI招聘HR自动化",
+    "thesis": "招聘流程里有大量重复筛选、沟通和面试准备，适合做半自动交付。",
+    "signal_text": "AI recruiting、candidate screening、interview assistant相关信息增加，说明HR场景正在工具化。",
+    "keywords": [
+      "recruiting",
+      "hr",
+      "candidate",
+      "招聘",
+      "面试",
+      "interview assistant"
+    ],
+    "metric_label": "HR自动化信号",
+    "best_for": "懂招聘、岗位画像、简历筛选或HR流程的人",
+    "opportunity": "做招聘自动化：JD优化、简历初筛表、面试题库、候选人沟通模板、入职问答库。",
+    "threshold_text": "中。需要避免歧视性筛选，保留人工判断，并保护候选人隐私。",
+    "tools": [
+      "ChatGPT",
+      "飞书多维表格",
+      "Notion",
+      "LinkedIn",
+      "Calendly"
+    ],
+    "first_action": "选一个岗位，做JD、筛选表、10道面试题和候选人沟通模板。",
+    "actions": [
+      "从一个岗位开始，不做全流程招聘系统。",
+      "把筛选标准显性化，避免黑箱判断。",
+      "用招聘周期和沟通效率证明价值。"
+    ],
+    "sort_order": 320,
+    "is_visible": 1
+  },
+  {
+    "id": "local-real-estate",
+    "title": "AI房产家装本地营销",
+    "thesis": "房产、装修、家居这类本地行业需要素材、获客和案例包装，AI可以降低内容成本。",
+    "signal_text": "AI real estate marketing、home staging、renovation marketing相关信号出现，说明本地服务行业有可交付空间。",
+    "keywords": [
+      "real estate",
+      "房产",
+      "装修",
+      "home staging",
+      "property",
+      "renovation"
+    ],
+    "metric_label": "房产家装信号",
+    "best_for": "能接触本地商家、懂案例包装或有设计审美的人",
+    "opportunity": "做房产/装修营销包：户型解读、案例图文、短视频脚本、线索问答、朋友圈素材。",
+    "threshold_text": "中。需要懂本地成交链路、真实案例和合规表达。",
+    "tools": [
+      "Canva",
+      "ChatGPT",
+      "剪映",
+      "飞书表格",
+      "Midjourney"
+    ],
+    "first_action": "找一个装修或房产案例，做10条短视频脚本和6张案例海报。",
+    "actions": [
+      "先做内容和获客素材，不碰专业承诺。",
+      "围绕真实案例做前后对比。",
+      "用咨询量和线索质量复盘。"
+    ],
+    "sort_order": 330,
+    "is_visible": 1
+  },
+  {
+    "id": "local-restaurant",
+    "title": "AI餐饮门店运营",
+    "thesis": "餐饮门店最需要低成本获客和菜单素材，AI可以快速做活动内容和评价分析。",
+    "signal_text": "AI restaurant marketing、menu design、food delivery marketing相关信息增加，说明门店运营也在AI化。",
+    "keywords": [
+      "restaurant",
+      "餐饮",
+      "menu",
+      "菜单",
+      "外卖",
+      "food delivery"
+    ],
+    "metric_label": "餐饮运营信号",
+    "best_for": "能服务本地餐饮、会拍摄/设计/活动策划的人",
+    "opportunity": "做餐饮门店素材：菜单文案、外卖图、活动海报、点评回复、短视频脚本、社群话术。",
+    "threshold_text": "低到中。需要懂门店实际运营、活动节奏和食品宣传边界。",
+    "tools": [
+      "Canva",
+      "ChatGPT",
+      "剪映",
+      "美团/大众点评",
+      "飞书表格"
+    ],
+    "first_action": "找一家店，做一套新品菜单文案、5张海报和10条点评回复模板。",
+    "actions": [
+      "从一家真实门店试单。",
+      "把评价分析转成菜单和活动优化建议。",
+      "用订单、到店或社群咨询反馈复盘。"
+    ],
+    "sort_order": 340,
+    "is_visible": 1
+  },
+  {
+    "id": "travel-event",
+    "title": "AI旅游攻略与活动策划",
+    "thesis": "定制行程、婚礼活动和轻策划适合用AI做初稿，再靠人工审美和执行细节成交。",
+    "signal_text": "AI travel planning、AI event planning、wedding planning相关信息增加，说明个性化策划交付正在变轻。",
+    "keywords": [
+      "travel",
+      "旅游",
+      "itinerary",
+      "event planning",
+      "wedding",
+      "活动策划"
+    ],
+    "metric_label": "策划服务信号",
+    "best_for": "会做攻略、审美好、能沟通需求和预算的人",
+    "opportunity": "做定制策划：旅行路线、亲子活动、婚礼流程、企业团建、生日派对方案。",
+    "threshold_text": "中。需要人工核实地点、价格、时间、安全和供应商信息。",
+    "tools": [
+      "ChatGPT",
+      "Perplexity",
+      "Canva",
+      "Notion",
+      "小红书"
+    ],
+    "first_action": "选一个城市和人群，做一份3天2晚行程和预算表样例。",
+    "actions": [
+      "先做攻略和方案，不承诺包办全部履约。",
+      "用AI出初稿，人工核实细节。",
+      "用模板化问卷收集客户需求。"
+    ],
+    "sort_order": 350,
+    "is_visible": 1
+  },
+  {
+    "id": "game-assets",
+    "title": "AI游戏素材与互动内容",
+    "thesis": "独立开发者和小游戏团队需要大量低成本素材，AI适合做概念、图标、剧情和关卡草稿。",
+    "signal_text": "AI game assets、AI game art、interactive content tools相关信息增加，说明游戏素材生产出现小单机会。",
+    "keywords": [
+      "game assets",
+      "游戏素材",
+      "game art",
+      "roblox",
+      "interactive content"
+    ],
+    "metric_label": "游戏素材信号",
+    "best_for": "有美术审美、游戏兴趣或会基础引擎工具的人",
+    "opportunity": "做游戏素材包：图标、道具、角色概念、剧情文案、关卡说明、Roblox素材。",
+    "threshold_text": "中。需要版权意识、风格统一和二次修图能力。",
+    "tools": [
+      "Midjourney",
+      "Photoshop",
+      "Canva",
+      "ChatGPT",
+      "Unity"
+    ],
+    "first_action": "选一种游戏风格，做10个图标、3个角色概念和一页素材展示。",
+    "actions": [
+      "先做素材包，不急着做完整游戏。",
+      "固定画风和尺寸规范。",
+      "去独立开发者社区找反馈。"
+    ],
+    "sort_order": 360,
+    "is_visible": 1
+  },
+  {
+    "id": "data-labeling",
+    "title": "AI数据标注与训练数据",
+    "thesis": "数据标注不是高毛利神话，但适合作为理解AI产业链和接小团队数据活的入口。",
+    "signal_text": "AI data labeling、training data marketplace、annotation service相关信息增加，说明训练数据仍是基础需求。",
+    "keywords": [
+      "data labeling",
+      "数据标注",
+      "annotation",
+      "training data",
+      "标注"
+    ],
+    "metric_label": "数据标注信号",
+    "best_for": "细心、能组织兼职团队、懂基础质量检查的人",
+    "opportunity": "做小规模标注服务：图片分类、文本清洗、客服语料整理、行业问答数据集。",
+    "threshold_text": "低到中。利润有限，关键在质量控制、交付规范和稳定客户。",
+    "tools": [
+      "Label Studio",
+      "飞书表格",
+      "ChatGPT",
+      "Airtable",
+      "CVAT"
+    ],
+    "first_action": "选一个数据类型，做50条样例标注和一份质量检查表。",
+    "actions": [
+      "先做小批量样例，不接超大单。",
+      "建立标注规范和复检规则。",
+      "用准确率和交付速度报价。"
+    ],
+    "sort_order": 370,
+    "is_visible": 1
+  },
+  {
+    "id": "xiaohongshu",
+    "title": "AI小红书种草与矩阵",
+    "thesis": "小红书机会不在批量灌水，而在垂直人群的选题、笔记结构和真实素材复用。",
+    "signal_text": "AI小红书、种草笔记、矩阵号和带货相关信息持续出现，说明平台型内容仍是普通人入口。",
+    "keywords": [
+      "小红书",
+      "种草",
+      "矩阵",
+      "笔记",
+      "xiaohongshu"
+    ],
+    "metric_label": "小红书信号",
+    "best_for": "会选题、拍素材、懂人群痛点和平台笔记结构的人",
+    "opportunity": "做小红书内容服务：选题库、标题、封面、笔记模板、评论回复、商家种草素材。",
+    "threshold_text": "中。需要真实素材、平台规则意识和人工审核，不能只用AI复制内容。",
+    "tools": [
+      "小红书",
+      "ChatGPT",
+      "Canva",
+      "剪映",
+      "飞书表格"
+    ],
+    "first_action": "选一个品类，拆20篇爆款笔记，做10个标题和3篇样稿。",
+    "actions": [
+      "先服务一个品类，比如家居、美妆、母婴或本地生活。",
+      "用AI做结构和变体，人工补真实体验。",
+      "用收藏率和评论咨询判断方向。"
+    ],
+    "sort_order": 380,
+    "is_visible": 1
+  },
+  {
+    "id": "local-life",
+    "title": "AI本地生活获客",
+    "thesis": "本地生活商家缺的不是AI工具，而是一套能持续产出内容和线索的低成本系统。",
+    "signal_text": "AI本地生活、餐饮营销、装修获客、房产营销等中文信号增加，说明线下服务业也在找AI提效入口。",
+    "keywords": [
+      "本地生活",
+      "家政",
+      "装修",
+      "房产",
+      "餐饮",
+      "门店",
+      "获客"
+    ],
+    "metric_label": "本地生活信号",
+    "best_for": "能接触本地老板、懂服务业成交链路的人",
+    "opportunity": "做本地生活获客包：短视频脚本、海报、FAQ、私域话术、点评回复、活动方案。",
+    "threshold_text": "中。需要真实商家配合、案例数据和持续交付。",
+    "tools": [
+      "ChatGPT",
+      "剪映",
+      "Canva",
+      "企微",
+      "飞书表格"
+    ],
+    "first_action": "找一个本地商家，用一周做10条内容、20条FAQ和5条跟进话术。",
+    "actions": [
+      "先做一家商家的样板。",
+      "用咨询量、到店量或报价请求数复盘。",
+      "把有效模板复制到同类商家。"
+    ],
+    "sort_order": 390,
+    "is_visible": 1
+  }
+]

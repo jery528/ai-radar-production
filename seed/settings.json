@@ -1,0 +1,226 @@
+[
+  {
+    "setting_key": "site.title",
+    "value": "AI破局情报导航 | 全球 AI 信息雷达",
+    "type": "string",
+    "category": "site",
+    "label": "站点标题",
+    "description": "浏览器标签页与 SEO 标题"
+  },
+  {
+    "setting_key": "site.metaDescription",
+    "value": "AI破局情报导航聚合全球公开 AI 信息源，按基础模型、Agent、开源模型、多模态、普通人热门AI变现、企业落地等赛道分类。",
+    "type": "string",
+    "category": "site",
+    "label": "SEO 描述",
+    "description": "meta description"
+  },
+  {
+    "setting_key": "crawl.proxyEnabled",
+    "value": true,
+    "type": "boolean",
+    "category": "crawl",
+    "label": "启用出网代理",
+    "description": "本机开发时开启；部署到海外服务器可关闭（关闭后始终直连）"
+  },
+  {
+    "setting_key": "crawl.proxyUrl",
+    "value": "http://127.0.0.1:7890",
+    "type": "string",
+    "category": "crawl",
+    "label": "出网代理地址",
+    "description": "抓取与大模型出网代理（HTTP），留空=直连；不可达时自动降级直连"
+  },
+  {
+    "setting_key": "crawl.lookbackDays",
+    "value": 30,
+    "type": "number",
+    "category": "crawl",
+    "label": "保留天数",
+    "description": "只保留最近 N 天内的情报"
+  },
+  {
+    "setting_key": "crawl.concurrency",
+    "value": 12,
+    "type": "number",
+    "category": "crawl",
+    "label": "抓取并发数",
+    "description": "同时抓取的来源数量"
+  },
+  {
+    "setting_key": "crawl.timeoutMs",
+    "value": 12000,
+    "type": "number",
+    "category": "crawl",
+    "label": "单源超时(毫秒)",
+    "description": "单个来源抓取超时时间"
+  },
+  {
+    "setting_key": "crawl.maxItemsPerSource",
+    "value": 60,
+    "type": "number",
+    "category": "crawl",
+    "label": "单源条目上限",
+    "description": "每个来源最多保留的条目数"
+  },
+  {
+    "setting_key": "crawl.intervalMinutes",
+    "value": 360,
+    "type": "number",
+    "category": "crawl",
+    "label": "定时抓取间隔(分钟)",
+    "description": "0 表示关闭定时抓取"
+  },
+  {
+    "setting_key": "crawl.publicRefreshCooldownSec",
+    "value": 300,
+    "type": "number",
+    "category": "crawl",
+    "label": "公共刷新冷却(秒)",
+    "description": "前台刷新按钮的全局冷却时间"
+  },
+  {
+    "setting_key": "crawl.resolveGoogleLinks",
+    "value": true,
+    "type": "boolean",
+    "category": "crawl",
+    "label": "解析 Google News 原文链接",
+    "description": "关闭后保留 Google News 跳转链接"
+  },
+  {
+    "setting_key": "crawl.googleResolveMaxPerRun",
+    "value": 150,
+    "type": "number",
+    "category": "crawl",
+    "label": "每轮解链上限",
+    "description": "每次抓取最多新解析的 Google 链接数"
+  },
+  {
+    "setting_key": "crawl.fallbackSector",
+    "value": "ai-apps",
+    "type": "string",
+    "category": "crawl",
+    "label": "兜底赛道",
+    "description": "无法分类时归入的赛道 ID"
+  },
+  {
+    "setting_key": "llm.enabled",
+    "value": true,
+    "type": "boolean",
+    "category": "llm",
+    "label": "启用大模型",
+    "description": "GLM 总开关"
+  },
+  {
+    "setting_key": "llm.baseUrl",
+    "value": "https://open.bigmodel.cn/api/paas/v4",
+    "type": "string",
+    "category": "llm",
+    "label": "API 地址",
+    "description": "OpenAI 兼容接口基址"
+  },
+  {
+    "setting_key": "llm.apiKey",
+    "value": "",
+    "type": "secret",
+    "category": "llm",
+    "label": "API Key",
+    "description": "智谱 BigModel API Key"
+  },
+  {
+    "setting_key": "llm.model",
+    "value": "glm-5.1",
+    "type": "string",
+    "category": "llm",
+    "label": "模型名称",
+    "description": "如 glm-5.1"
+  },
+  {
+    "setting_key": "llm.temperature",
+    "value": 0.3,
+    "type": "number",
+    "category": "llm",
+    "label": "温度",
+    "description": "生成随机性 0-1"
+  },
+  {
+    "setting_key": "llm.maxTokens",
+    "value": 2048,
+    "type": "number",
+    "category": "llm",
+    "label": "单次最大输出 token",
+    "description": ""
+  },
+  {
+    "setting_key": "llm.classifyEnabled",
+    "value": true,
+    "type": "boolean",
+    "category": "llm",
+    "label": "启用智能分类",
+    "description": "关键词判不准的条目交给 GLM 分类"
+  },
+  {
+    "setting_key": "llm.classifyMaxPerRun",
+    "value": 80,
+    "type": "number",
+    "category": "llm",
+    "label": "每轮分类上限",
+    "description": "每次抓取最多交给 GLM 分类的条目数"
+  },
+  {
+    "setting_key": "llm.summaryEnabled",
+    "value": true,
+    "type": "boolean",
+    "category": "llm",
+    "label": "启用中文摘要",
+    "description": "为热门英文条目生成中文摘要"
+  },
+  {
+    "setting_key": "llm.summaryMaxPerRun",
+    "value": 20,
+    "type": "number",
+    "category": "llm",
+    "label": "每轮摘要上限",
+    "description": "每次抓取最多生成的摘要数"
+  },
+  {
+    "setting_key": "llm.reportHourBeijing",
+    "value": 5,
+    "type": "number",
+    "category": "llm",
+    "label": "日报生成时间(北京小时)",
+    "description": "每天该整点后生成一次当日日报，0-23"
+  },
+  {
+    "setting_key": "llm.reportFocus",
+    "value": "AI短视频与数字人",
+    "type": "string",
+    "category": "llm",
+    "label": "日报重点关注",
+    "description": "日报内容优先覆盖的方向，留空则不偏重"
+  },
+  {
+    "setting_key": "llm.reportEnabled",
+    "value": true,
+    "type": "boolean",
+    "category": "llm",
+    "label": "启用洞察日报",
+    "description": "每次抓取后生成 AI 机会洞察日报"
+  },
+  {
+    "setting_key": "llm.dailyTokenBudget",
+    "value": 500000,
+    "type": "number",
+    "category": "llm",
+    "label": "每日 token 预算",
+    "description": "超过后当日不再调用大模型"
+  },
+  {
+    "setting_key": "admin.sessionTtlHours",
+    "value": 72,
+    "type": "number",
+    "category": "admin",
+    "label": "登录有效期(小时)",
+    "description": "管理后台 token 有效期"
+  }
+]
