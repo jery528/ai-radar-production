@@ -86,7 +86,11 @@ async function buildPayload() {
     generatedAt: (lastRun && lastRun.status === "ok" && lastRun.finishedAt
       ? new Date(lastRun.finishedAt).toISOString()
       : runStats.generatedAt) || null,
-    sectors: visibleSectors.map((s) => ({ id: s.id, name: s.name, description: s.description })),
+    // 赛道按情报量（机会分）高低排序，不再用手工 sort_order 置顶；量相等时保留 sort_order 次序
+    sectors: visibleSectors
+      .slice()
+      .sort((a, b) => (sectorItemCounts[b.id] || 0) - (sectorItemCounts[a.id] || 0))
+      .map((s) => ({ id: s.id, name: s.name, description: s.description })),
     stats,
     modules: modules.map((m) => ({
       id: m.id,
