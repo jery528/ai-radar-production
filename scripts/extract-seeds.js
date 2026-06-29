@@ -455,7 +455,7 @@ const settings = [
   { setting_key: "llm.enabled", value: true, type: "boolean", category: "llm", label: "启用大模型", description: "GLM 总开关" },
   { setting_key: "llm.baseUrl", value: "https://open.bigmodel.cn/api/paas/v4", type: "string", category: "llm", label: "API 地址", description: "OpenAI 兼容接口基址" },
   { setting_key: "llm.apiKey", value: "", type: "secret", category: "llm", label: "API Key", description: "智谱 BigModel API Key" },
-  { setting_key: "llm.model", value: "glm-5.1", type: "string", category: "llm", label: "模型名称", description: "如 glm-5.1" },
+  { setting_key: "llm.model", value: "glm-5.2", type: "string", category: "llm", label: "模型名称", description: "如 glm-5.2" },
   { setting_key: "llm.temperature", value: 0.3, type: "number", category: "llm", label: "温度", description: "生成随机性 0-1" },
   { setting_key: "llm.maxTokens", value: 2048, type: "number", category: "llm", label: "单次最大输出 token", description: "" },
   { setting_key: "llm.classifyEnabled", value: true, type: "boolean", category: "llm", label: "启用智能分类", description: "关键词判不准的条目交给 GLM 分类" },

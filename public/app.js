@@ -307,7 +307,9 @@
           linkText: linkResolutionText(),
         })
       : s.waitingText || "";
-    el.innerHTML = `<span>${escapeHtml(s.brandText || "")}</span><span data-health>${escapeHtml(health)}</span>`;
+    // 封底左侧统一显示网站标题（取顶栏品牌名，与页头同步、随后台配置变化）
+    const brandTitle = moduleSettings("topbar").brandName || s.brandText || "";
+    el.innerHTML = `<span>${escapeHtml(brandTitle)}</span><span data-health>${escapeHtml(health)}</span>`;
     el.hidden = false;
   }
 

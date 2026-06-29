@@ -132,8 +132,7 @@ async function seedIfNeeded() {
     for (const [id, navItems] of Object.entries(navUpdates)) {
       await query("UPDATE modules SET nav_items = ? WHERE id = ?", [JSON.stringify(navItems), id]);
     }
-    // 用户主营方向置顶：AI短视频与数字人话题 + 相关来源排前
-    await query("UPDATE insight_topics SET is_pinned = 1 WHERE id = 'video'");
+    // 用户主营方向相关来源排前（话题置顶已取消，不再默认置顶 AI短视频与数字人）
     const videoSources = [
       "google-news-income-short-video",
       "google-news-income-faceless-youtube",

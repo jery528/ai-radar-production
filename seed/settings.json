@@ -129,11 +129,11 @@
   },
   {
     "setting_key": "llm.model",
-    "value": "glm-5.1",
+    "value": "glm-5.2",
     "type": "string",
     "category": "llm",
     "label": "模型名称",
-    "description": "如 glm-5.1"
+    "description": "如 glm-5.2"
   },
   {
     "setting_key": "llm.temperature",

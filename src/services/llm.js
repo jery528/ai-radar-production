@@ -26,7 +26,7 @@ async function getConfig() {
     enabled: Boolean(await settings.get("llm.enabled", false)),
     baseUrl: String(await settings.get("llm.baseUrl", "https://open.bigmodel.cn/api/paas/v4")).replace(/\/+$/, ""),
     apiKey: String(await settings.get("llm.apiKey", "") || ""),
-    model: String(await settings.get("llm.model", "glm-5.1")),
+    model: String(await settings.get("llm.model", "glm-5.2")),
     temperature: Number(await settings.get("llm.temperature", 0.3)),
     maxTokens: Number(await settings.get("llm.maxTokens", 2048)),
     dailyTokenBudget: Number(await settings.get("llm.dailyTokenBudget", 500000)),
@@ -67,7 +67,7 @@ async function chat(messages, options = {}) {
     temperature: options.temperature !== undefined ? options.temperature : config.temperature,
     max_tokens: options.maxTokens || config.maxTokens,
     stream: false,
-    // GLM-5.1 是思考型模型，reasoning_content 会大量消耗 token；
+    // GLM-5.2 是思考型模型，reasoning_content 会大量消耗 token；
     // 分类/摘要/日报这类任务不需要深度推理，默认关闭（可用 options.thinking 打开）。
     thinking: { type: options.thinking ? "enabled" : "disabled" },
   });
